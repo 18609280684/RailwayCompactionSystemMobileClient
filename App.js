@@ -11,6 +11,30 @@ import {
   Text,
   View
 } from 'react-native';
+import {
+    StackNavigator,
+    DrawerNavigator
+} from 'react-navigation';
+import {
+    HomeDrawerNavigatorView,
+} from  './DrawerNavigatorView/HomeDrawerNavigatorView.js';
+import {
+    DaydataView,
+    DataDownloadingView,
+    EquipmentDiagnosisView,
+    SystemConfigurationView,
+    NetworkSettingsView,
+    SatelliteStateView,
+    AlarmSettingView,
+    SystemUpgradeView,
+} from './DrawerNavigatorView/OthersDrawerNavigatorView.js';
+import {
+    deviceWidth,
+    deviceHeight,
+    setSpText,
+    scaleSize,
+} from './Utils/ScreenAdaptationUtil.js';
+
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -22,20 +46,86 @@ const instructions = Platform.select({
 export default class App extends Component<{}> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
+      <RootStackNavigator />
     );
   }
 }
+
+const RootDrawerNavigator = DrawerNavigator({
+    Home:{
+        screen:HomeDrawerNavigatorView,
+    },
+    Daydata:{
+        screen:DaydataView,
+    },
+    DataDownloading:{
+        screen:DataDownloadingView,
+    },
+    EquipmentDiagnosis:{
+        screen:EquipmentDiagnosisView,
+    },
+    SystemConfiguration:{
+        screen:SystemConfigurationView,
+    },
+    NetworkSettings:{
+        screen:NetworkSettingsView,
+    },
+    SatelliteState:{
+        screen:SatelliteStateView,
+    },
+    AlarmSetting:{
+        screen:AlarmSettingView,
+    },
+    SystemUpgrade:{
+        screen:SystemUpgradeView,
+    },
+},{
+    drawerWidth: scaleSize(400),
+    drawerPosition: 'right',
+    //drawerBackgroundColor:'#292929',
+    contentOptions:{
+        labelStyle:{
+            fontSize:setSpText(26),
+            color:'rgb(255,255,255)',
+            justifyContent:'flex-start',
+            backgroundColor:'#292929',
+        },
+    },
+});
+
+const RootStackNavigator = StackNavigator({
+    Home:{
+         screen:RootDrawerNavigator,
+     },
+    Daydata:{
+        screen:DaydataView,
+    },
+    DataDownloading:{
+        screen:DataDownloadingView,
+    },
+    EquipmentDiagnosis:{
+        screen:EquipmentDiagnosisView,
+    },
+    SystemConfiguration:{
+        screen:SystemConfigurationView,
+    },
+    NetworkSettings:{
+        screen:NetworkSettingsView,
+    },
+    SatelliteState:{
+        screen:SatelliteStateView,
+    },
+    AlarmSetting:{
+        screen:AlarmSettingView,
+    },
+    SystemUpgrade:{
+        screen:SystemUpgradeView,
+    },
+},{
+    navigationOptions:({navigation}) => ({
+            header:false,
+    }),
+});
 
 const styles = StyleSheet.create({
   container: {
