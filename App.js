@@ -34,6 +34,11 @@ import {
     setSpText,
     scaleSize,
 } from './Utils/ScreenAdaptationUtil.js';
+import {
+    RequestUrl,
+    Banner_Imgs,
+    Constants
+} from './Utils/Constants.js';
 
 
 const instructions = Platform.select({
@@ -84,14 +89,48 @@ const RootDrawerNavigator = DrawerNavigator({
     drawerPosition: 'right',
     //drawerBackgroundColor:'#292929',
     contentOptions:{
+        activeBackgroundColor:'#fece22',
         labelStyle:{
             fontSize:setSpText(26),
             color:'rgb(255,255,255)',
             justifyContent:'flex-start',
             backgroundColor:'#292929',
+
         },
     },
+
+    //contentComponent: props =>{
+    //    console.log('ooooooooooooooooooooooooooo');
+    //    //console.log(props.navigation.state.params);
+    //    console.log('lllllllllllllllllllllllllll');
+    //    //console.log(props.navigation);
+    //    return (
+    //        <Testter daili={props}/>
+    //    );
+    //},
 });
+
+class Testter extends Component{
+
+    // 构造
+      constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            myText:'chenjianhui',
+        };
+      }
+
+    render(){
+        console.log('nnnnnnnnnnnnnnnnnnnnnnnnnn');
+        return(
+            <Text onPress={() => this.props.daili.navigation.navigate('EquipmentDiagnosis',{name:'chenjianlong'})}>
+
+                {Constants.name}
+            </Text>
+        );
+    }
+}
 
 const RootStackNavigator = StackNavigator({
     Home:{
@@ -124,6 +163,7 @@ const RootStackNavigator = StackNavigator({
 },{
     navigationOptions:({navigation}) => ({
             header:false,
+            mode:'card',
     }),
 });
 

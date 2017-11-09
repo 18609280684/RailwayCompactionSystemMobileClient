@@ -5,6 +5,11 @@ const RequestUrl = {
 
 };
 
+const Constants = {
+    name:'chenxiuli',
+    password:2,
+};
+
 const Banner_Imgs = {
     HOMEPAGE_SatelliteStateOne:require('../Image/Home/SatelliteStateOne.png'),
     HOMEPAGE_SatelliteStateTwo:require('../Image/Home/SatelliteStateTwo.png'),
@@ -24,6 +29,7 @@ const Banner_Imgs = {
     HOMEPAGEBUTTON_RefreshNight:require('../Image/Home/RefreshNight.png'),
     HOMEPAGEBUTTN_Arrow:require('../Image/Home/Arrow.png'),
 
+
     DRAWVIEWPAGE_TodayData:require('../Image/DrawerNavigatorView/TodayData.png'),
     DRAWVIEWPAGE_DataDownloading:require('../Image/DrawerNavigatorView/DataDownloading.png'),
     DRAWVIEWPAGE_EquipmentDiagnosis:require('../Image/DrawerNavigatorView/EquipmentDiagnosis.png'),
@@ -32,12 +38,18 @@ const Banner_Imgs = {
     DRAWVIEWPAGE_SatelliteState:require('../Image/DrawerNavigatorView/SatelliteState.png'),
     DRAWVIEWPAGE_AlarmSetting:require('../Image/DrawerNavigatorView/AlarmSetting.png'),
     DRAWVIEWPAGE_SystemUpgrade:require('../Image/DrawerNavigatorView/SystemUpgrade.png'),
+    HOMEPAGECELL_Cell:require('../Image/DrawerNavigatorView/cell.png'),
+    DRAWVIEWPAGE_DropDownButton:require('../Image/DrawerNavigatorView/SelectDropDownButton.png'),
+    DRAWVIEWPAGE_BackArrowButton:require('../Image/DrawerNavigatorView/BackArrow.png'),
 
+    DATADOWNLOADING_SELECTONURL:require('../Image/DrawerNavigatorView/SelectOn.png'),
+    DATADOWNLOADING_SELECTOFFURL:require('../Image/DrawerNavigatorView/SelectOff.png'),
 
 
 };
 
 export {
     RequestUrl,
-    Banner_Imgs
+    Banner_Imgs,
+    Constants
 };

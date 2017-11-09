@@ -7,7 +7,10 @@ import {
     StyleSheet,
     Text,
     View,
-    Image
+    Image,
+    TouchableHighlight,
+    Alert,
+    FlatList
 } from 'react-native';
 import {
     deviceWidth,
@@ -18,7 +21,9 @@ import {
 import {
     RequestUrl,
     Banner_Imgs
-} from '../Utils/Constants.js'
+} from '../Utils/Constants.js';
+import Echarts from 'native-echarts';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 class DaydataView extends Component{
     static navigationOptions = ({navigation}) => ({
@@ -31,15 +36,242 @@ class DaydataView extends Component{
         ),
     });
 
-    render(){
-        return(
+    constructor(props) {
+        super(props);
+        this.state = {
+            yashichengdu:true,
+            yashizhuangtai:false,
+            junyundu:false,
+            canada: '',
+        };
+    }
 
-            <Text>当日数据页面</Text>
+    render(){
+        const bianchang = 100;
+
+        const option = {
+            color: ['#3398DB'],
+            title: {
+                show:false,
+                text: '特性示例：渐变色 阴影 点击缩放',
+                subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
+            },
+            legend:{
+                type:'scroll',
+            },
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'直接访问',
+                    type:'bar',
+                    barWidth: '60%',
+                    data:[10, 52, 200, 334, 390, 330, 220]
+                }
+            ]
+        };
+        const {navigate} = this.props.navigation;
+        return(
+            <View style={{flex:1}}>
+                <View style={{flex:0.1,backgroundColor:'rgb(255,255,255)',flexDirection:'row'}}>
+                    <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
+                        <Text style={{fontSize:setSpText(36),color:'#333333'}}>
+                            当日数据
+                        </Text>
+                    </View>
+                    <View style={{flex:0.82,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                        <View style={{flex:0.4,flexDirection:'row',justifyContent:'space-around',}}>
+                            <Text style={{fontSize:setSpText(22),color:'#666666'}}>
+                                从
+                            </Text>
+                            <Image style={{width:scaleSize(300),height:scaleSize(60)}}  source={Banner_Imgs.DRAWVIEWPAGE_DropDownButton}>
+                                <ModalDropdown
+                                    options={['8:00AM', '9:00AM', '10:00AM', '11:00AM', '12:00AM', '1:00FM', '2:00FM', '3:00FM']}
+                                    onSelect={(op) => Alert.alert('op:' + op)}
+                                    defaultValue = ' 请选择起始时间'
+                                    dropdownStyle = {{width:scaleSize(300)}}
+                                    textStyle = {{fontSize:setSpText(22),height:scaleSize(60),color:'#666666',marginLeft:scaleSize(5)}}
+                                />
+                            </Image>
+                            <Text style={{fontSize:setSpText(22),color:'#666666'}}>
+                                到现在的数据
+                            </Text>
+                        </View>
+                        <View style={{flex:0.6,flexDirection:'row'}}>
+                            <TouchableHighlight style={{flex:0.15,backgroundColor:'#393939',
+                            justifyContent:'center',alignItems:'center',height:scaleSize(80)}}
+                                                onPress={() => Alert.alert('') } underlayColor = '#fece22'>
+                                <Text style={{fontSize:setSpText(22),color:'#ffffff'}}>
+                                    统计
+                                </Text>
+                            </TouchableHighlight>
+                            <View style={{flex:0.6,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                <Text style={{fontSize:setSpText(26),color:'#333333'}}>
+                                    压实面积：3200m
+                                </Text>
+                            </View>
+                            <View style={{flex:0.25,alignItems:'flex-end'}}>
+                                <TouchableHighlight onPress={() =>navigate('Home') } style={{marginRight:scaleSize(50)}} underlayColor='#fece22'>
+                                <Image style={{height:scaleSize(100),width:scaleSize(100)}} source = {Banner_Imgs.DRAWVIEWPAGE_BackArrowButton}/>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={{flex:0.9,backgroundColor:'rgb(0,0,0)',flexDirection:'row'}}>
+                    <View style={{flex:0.18,backgroundColor:'#292929'}}>
+
+                        <View style={{flex:(10/3),backgroundColor:(this.state.yashichengdu ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        yashichengdu:true,
+                                        yashizhuangtai:false,
+                                        junyundu:false,
+                                });
+                            }}
+                                                underlayColor = '#fece22'>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.yashichengdu ? '#222222' : '#ffffff')}}>
+                                    压实程度
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(10/3),backgroundColor:(this.state.yashizhuangtai ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        yashichengdu:false,
+                                        yashizhuangtai:true,
+                                        junyundu:false,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.yashizhuangtai ? '#222222' : '#ffffff')}}>
+                                    压实状态
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(10/3),backgroundColor:(this.state.junyundu ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        yashichengdu:false,
+                                        yashizhuangtai:false,
+                                        junyundu:true,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.junyundu ? '#222222' : '#ffffff')}}>
+                                    均匀度
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                    </View>
+                    <View style={{flex:0.82,backgroundColor:'rgb(0,255,0)'}}>
+                        <View style={{flex:0.2,backgroundColor:'#eeeeee',flexDirection:'row'}}>
+                            <View style={{flex:0.7,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                <View style={{backgroundColor:'#fece22',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                        1-10
+                                    </Text>
+                                </View>
+
+                                <View style={{backgroundColor:'#fe7210',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                        11-20
+                                    </Text>
+                                </View>
+
+                                <View style={{backgroundColor:'#da251c',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                        21-30
+                                    </Text>
+                                </View>
+
+                                <View style={{backgroundColor:'#34a710',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                        31-40
+                                    </Text>
+                                </View>
+
+                                <View style={{backgroundColor:'#008212',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                        41-50
+                                    </Text>
+                                </View>
+
+                                <View style={{backgroundColor:'#085460',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                        51-60
+                                    </Text>
+                                </View>
+
+                                <View style={{backgroundColor:'#735998',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                        61-70
+                                    </Text>
+                                </View>
+
+                                <View style={{backgroundColor:'#343f84',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                        71-80
+                                    </Text>
+                                </View>
+
+                                <View style={{backgroundColor:'#142a74',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                        81-90
+                                    </Text>
+                                </View>
+
+                                <View style={{backgroundColor:'#09194e',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                        91-100
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={{flex:0.3,backgroundColor:'rgb(0,0,0)'}}>
+
+                            </View>
+                        </View>
+                        <View style={{flex:0.8,backgroundColor:'rgb(255,255,0)'}}>
+                            <Echarts option={option} height={150} width = {300} />
+                        </View>
+                    </View>
+                </View>
+            </View>
         );
     }
 }
 
+var ITEM_HEIGHT = 100;
 class DataDownloadingView extends Component{
+
+    _flatList;
+    _keyExtractor = (item, index) => index;
+
     static navigationOptions = ({navigation}) => ({
         drawerLabel:'数据下载',
         drawerIcon:({ tintColor }) => (
@@ -50,14 +282,193 @@ class DataDownloadingView extends Component{
         ),
     });
 
+    // 构造
+      constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            data:[{beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},{beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},
+                {beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},{beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},
+                {beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},{beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},
+                {beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},{beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},
+                {beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},{beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},
+                {beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},{beginTime:'2017-11-08 12:32:05',endTime:'2017-11-15 01:32:08',dataSize:'50K',},
+            ],
+            selectAll:false,
+            selectArry:[false,false,true,false,false,false,true,false,false,false,false,false],
+        };
+      }
+
     render(){
+        const {navigation} = this.props;
         return(
-            <Text>数据下载</Text>
+            <View style={{flex:1,}}>
+                <View style={{flex:0.11,flexDirection:'row',backgroundColor:'rgb(255,255,255)'}}>
+                    <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
+                        <Text style={{fontSize:setSpText(36),color:'#333333'}}>
+                            数据下载
+                        </Text>
+                    </View>
+                    <View style={{flex:0.82,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                        <View style={{flex:0.3,justifyContent:'center',alignItems:'center'}}>
+                            <Text style={{fontSize:setSpText(26),color:'#da251c'}}>
+                                 剩余容量：80MB
+                            </Text>
+                        </View>
+                        <View style={{flex:0.7,flexDirection:'row'}}>
+                            <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+                                <Text style={{fontSize:setSpText(26),color: '#333333'}}>
+                                    已使用容量：420MB
+                                </Text>
+                            </View>
+                            <View style={{flex:0.3,justifyContent:'center',alignItems:'center'}}>
+                                <Text style={{fontSize:setSpText(26),color:'#333333'}}>
+                                    剩余（%）：30%
+                                </Text>
+                            </View>
+                            <View style={{flex:0.3,alignItems:'flex-end'}}>
+                                <TouchableHighlight onPress={() =>navigation.goBack() } style={{marginRight:scaleSize(50)}} underlayColor='#fece22'>
+                                    <Image style={{height:scaleSize(100),width:scaleSize(100)}} source = {Banner_Imgs.DRAWVIEWPAGE_BackArrowButton}/>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={{flex:0.09,flexDirection:'row',backgroundColor:'#eeeeee'}}>
+                    <View style={{flex:0.1,justifyContent:'center',alignItems:'center'}}>
+                          <Text style={{fontSize:setSpText(24),color:'#333333'}}>
+                              序号
+                          </Text>
+                    </View>
+                    <View style={{flex:0.25,justifyContent:'center',alignItems:'flex-start'}}>
+                        <Text style={{fontSize:setSpText(24),color:'#333333'}}>
+                            开始时间
+                        </Text>
+                    </View>
+                    <View style={{flex:0.25,justifyContent:'center',alignItems:'flex-start'}}>
+                       <Text style={{fontSize:setSpText(24),color:'#333333'}}>
+                           结束时间
+                       </Text>
+                    </View>
+                    <View style={{flex:0.2,justifyContent:'center',alignItems:'flex-start'}}>
+                        <Text style={{fontSize:setSpText(24),color:'#333333'}}>
+                            数据大小
+                        </Text>
+                    </View>
+                    <View style={{flex:0.2,justifyContent:'flex-start',alignItems:'center',flexDirection:'row'}}>
+                        <TouchableHighlight onPress={() => {
+                               var middleArray =[];
+                               for(var i = 0;i<this.state.selectArry.length;i++)
+                               {
+                                    middleArray[i] = !this.state.selectAll;
+                               }
+                               this.setState({
+                                    selectAll:!this.state.selectAll,
+                                    selectArry:middleArray,
+                               });
+
+                        }} underlayColor = '#eeeeee'>
+                            <Image style={{height:scaleSize(50),width:scaleSize(50)}}
+                                   source={this.state.selectAll?Banner_Imgs.DATADOWNLOADING_SELECTONURL:Banner_Imgs.DATADOWNLOADING_SELECTOFFURL}/>
+                        </TouchableHighlight>
+                        <Text style={{fontSize:setSpText(24),color:'#333333',marginLeft:scaleSize(20)}}>
+                               全选
+                        </Text>
+                    </View>
+                </View>
+                <View style={{flex:0.7,flexDirection:'row',backgroundColor:'rgb(255,255,255)'}}>
+                    <FlatList
+                        ref={(flatList)=>this._flatList = flatList}
+                        //ListHeaderComponent={this._header}
+                        //ItemSeparatorComponent={this._separator}
+                        getItemLayout={(item, index) => ( {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index} )}
+                        renderItem={this._renderItem}
+                        keyExtractor={this._keyExtractor}
+                        //ListEmptyComponent={this._createEmptyView()}
+                        data = {this.state.data}
+                    />
+                </View>
+                <View style={{flex:0.1,flexDirection:'row',backgroundColor:'#eeeeee',}}>
+                    <View style={{flex:0.5,justifyContent:'center',}}>
+                        <Text style={{fontSize:setSpText(26),color:'#333333',marginLeft:scaleSize(50)}}>
+                            已选择数据大小：4000K
+                        </Text>
+                    </View>
+                    <View style={{flex:0.5,flexDirection:'row',justifyContent:'flex-end'}}>
+                        <TouchableHighlight style={{flex: 0.25,backgroundColor:'#393939',alignItems:'center',justifyContent:'center'}} onPress={() => Alert.alert('')} underlayColor='#fece22'>
+                            <Text style={{fontSize:setSpText(26),color:'#ffffff'}}>
+                                下载
+                            </Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={{flex: 0.25,backgroundColor:'#393939',alignItems:'center',justifyContent:'center',marginLeft:scaleSize(50),marginRight:scaleSize(50)}} onPress={() => Alert.alert('')} underlayColor='#fece22'>
+                            <Text style={{fontSize:setSpText(26),color:'#ffffff'}}>
+                                下载并删除
+                            </Text>
+                        </TouchableHighlight>
+                    </View>
+                </View>
+            </View>
         );
     }
+
+    _header = () =>{
+        return(
+            <View>
+
+            </View>
+        );
+    }
+
+    _renderItem = (item,index) =>{
+        return(
+            <View style={{flex:1,flexDirection:'row',backgroundColor:(((item.index + 1)%2 == 1)?'#ffffff':'#eeeeee'),height:scaleSize(ITEM_HEIGHT)}}>
+                <View style={{flex:0.1,justifyContent:'center',alignItems:'center'}}>
+                    <Text style={{fontSize:setSpText(22),color:'#333333'}}>
+                        {item.index + 1}
+                    </Text>
+                </View>
+                <View style={{flex:0.25,justifyContent:'center',alignItems:'flex-start'}}>
+                    <Text style={{fontSize:setSpText(22),color:'#333333'}}>
+                        {item.item.beginTime}
+                    </Text>
+                </View>
+                <View style={{flex:0.25,justifyContent:'center',alignItems:'flex-start'}}>
+                    <Text style={{fontSize:setSpText(22),color:'#333333'}}>
+                        {item.item.endTime}
+                    </Text>
+                </View>
+                <View style={{flex:0.2,justifyContent:'center',alignItems:'flex-start'}}>
+                    <Text style={{fontSize:setSpText(22),color:'#333333'}}>
+                        {item.item.dataSize}
+                    </Text>
+                </View>
+                <View style={{flex:0.2,justifyContent:'flex-start',alignItems:'center',flexDirection:'row'}}>
+                    <TouchableHighlight onPress={() => {
+                          var middleArry = this.state.selectArry;
+                            middleArry[(item.index)] = !middleArry[(item.index)];
+                               this.setState({
+                                    selectArry:middleArry,
+                               });
+
+                        }} underlayColor = '#eeeeee'>
+                        <Image style={{height:scaleSize(50),width:scaleSize(50)}}
+                               source={this.state.selectArry[(item.index)]?Banner_Imgs.DATADOWNLOADING_SELECTONURL:Banner_Imgs.DATADOWNLOADING_SELECTOFFURL}/>
+                    </TouchableHighlight>
+                    <Text style={{fontSize:setSpText(22),color:'#333333',marginLeft:scaleSize(20)}}>
+                        全选
+                    </Text>
+                </View>
+            </View>
+        );
+    }
+
+
 }
 
 class EquipmentDiagnosisView extends Component{
+
+    _flatList;
+    _keyExtractor = (item, index) => index;
     static navigationOptions = ({navigation}) => ({
         drawerLabel:'设备诊断',
         drawerIcon:({ tintColor }) => (
@@ -68,9 +479,146 @@ class EquipmentDiagnosisView extends Component{
         ),
     });
 
+    // 构造
+    constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            data:[{equipmentName:'显示器',pN:'',sN:'',versionNumber:'',states:'1'},{equipmentName:'GNSS天线1',pN:'',sN:'',versionNumber:'',states:'1'},
+                {equipmentName:'GNSS天线2',pN:'',sN:'',versionNumber:'',states:'0'},{equipmentName:'流量传感器',pN:'',sN:'',versionNumber:'',states:'1'},
+                {equipmentName:'电流互感传感器',pN:'',sN:'',versionNumber:'',states:'1'},{equipmentName:'主控盒',pN:'',sN:'',versionNumber:'',states:'0'},
+            ],
+            selectAll:false,
+            selectArry:[false,false,true,false,false,false,true,false,false,false,false,false],
+        };
+    }
+
     render(){
+        const {navigation} = this.props;
         return(
-            <Text>设备诊断</Text>
+            <View style={{flex:1,}}>
+                <View style={{flex:0.11,flexDirection:'row',backgroundColor:'rgb(255,255,255)'}}>
+                    <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
+                        <Text style={{fontSize:setSpText(36),color:'#333333'}}>
+                            设备诊断
+                        </Text>
+                    </View>
+                    <View style={{flex:0.82,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                        <View style={{flex:0.3,justifyContent:'center',alignItems:'center'}}>
+                            <Text style={{fontSize:setSpText(26),color:'#da251c'}}>
+
+                            </Text>
+                        </View>
+                        <View style={{flex:0.7,flexDirection:'row'}}>
+                            <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+                                <Text style={{fontSize:setSpText(26),color: '#333333'}}>
+
+                                </Text>
+                            </View>
+                            <View style={{flex:0.3,justifyContent:'center',alignItems:'center'}}>
+                                <Text style={{fontSize:setSpText(26),color:'#333333'}}>
+
+                                </Text>
+                            </View>
+                            <View style={{flex:0.3,alignItems:'flex-end'}}>
+                                <TouchableHighlight onPress={() =>navigation.goBack() } style={{marginRight:scaleSize(50)}} underlayColor='#fece22'>
+                                    <Image style={{height:scaleSize(100),width:scaleSize(100)}} source = {Banner_Imgs.DRAWVIEWPAGE_BackArrowButton}/>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={{flex:0.09,flexDirection:'row',backgroundColor:'#eeeeee'}}>
+                    <View style={{flex:0.2,justifyContent:'center',alignItems:'center'}}>
+                        <Text style={{fontSize:setSpText(24),color:'#333333'}}>
+                            设备名称
+                        </Text>
+                    </View>
+                    <View style={{flex:0.2,justifyContent:'center',alignItems:'center'}}>
+                        <Text style={{fontSize:setSpText(24),color:'#333333'}}>
+                            PN
+                        </Text>
+                    </View>
+                    <View style={{flex:0.2,justifyContent:'center',alignItems:'center'}}>
+                        <Text style={{fontSize:setSpText(24),color:'#333333'}}>
+                            SN
+                        </Text>
+                    </View>
+                    <View style={{flex:0.2,justifyContent:'center',alignItems:'center'}}>
+                        <Text style={{fontSize:setSpText(24),color:'#333333'}}>
+                            版本号
+                        </Text>
+                    </View>
+                    <View style={{flex:0.2,justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
+
+                        <Text style={{fontSize:setSpText(24),color:'#333333',marginLeft:scaleSize(20)}}>
+                            状态
+                        </Text>
+                    </View>
+                </View>
+                <View style={{flex:0.7,flexDirection:'row',backgroundColor:'rgb(255,255,255)'}}>
+                    <FlatList
+                        ref={(flatList)=>this._flatList = flatList}
+                        //ListHeaderComponent={this._header}
+                        //ItemSeparatorComponent={this._separator}
+                        getItemLayout={(item, index) => ( {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index} )}
+                        renderItem={this._renderItem}
+                        keyExtractor={this._keyExtractor}
+                        //ListEmptyComponent={this._createEmptyView()}
+                        data = {this.state.data}
+                    />
+                </View>
+                <View style={{flex:0.1,flexDirection:'row',backgroundColor:'#eeeeee',}}>
+                    <View style={{flex:0.5,justifyContent:'center',}}>
+                        <Text style={{fontSize:setSpText(26),color:'#333333',marginLeft:scaleSize(50)}}>
+                            机器名称:PDS100-987526
+                        </Text>
+                    </View>
+                    <View style={{flex:0.5,flexDirection:'row',justifyContent:'flex-end'}}>
+
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
+    _header = () =>{
+        return(
+            <View>
+
+            </View>
+        );
+    }
+
+    _renderItem = (item,index) =>{
+        return(
+            <View style={{flex:1,flexDirection:'row',backgroundColor:((item.item.states == 1)?'#ffffff':'rgb(255,0,0)'),height:scaleSize(ITEM_HEIGHT)}}>
+                <View style={{flex:0.2,justifyContent:'center',alignItems:'center'}}>
+                    <Text style={{fontSize:setSpText(22),color:'#333333'}}>
+                        {item.item.equipmentName}
+                    </Text>
+                </View>
+                <View style={{flex:0.2,justifyContent:'center',alignItems:'flex-start'}}>
+                    <Text style={{fontSize:setSpText(22),color:'#333333'}}>
+                        {item.item.pN}
+                    </Text>
+                </View>
+                <View style={{flex:0.2,justifyContent:'center',alignItems:'flex-start'}}>
+                    <Text style={{fontSize:setSpText(22),color:'#333333'}}>
+                        {item.item.sN}
+                    </Text>
+                </View>
+                <View style={{flex:0.2,justifyContent:'center',alignItems:'flex-start'}}>
+                    <Text style={{fontSize:setSpText(22),color:'#333333'}}>
+                        {item.item.versionNumber}
+                    </Text>
+                </View>
+                <View style={{flex:0.2,justifyContent:'flex-start',alignItems:'center',flexDirection:'row'}}>
+                    <Text style={{fontSize:setSpText(22),color:'#333333',marginLeft:scaleSize(20)}}>
+                        {(item.item.states == 1)?'未连接':'已连接'}
+                    </Text>
+                </View>
+            </View>
         );
     }
 }
@@ -86,9 +634,142 @@ class SystemConfigurationView extends Component{
         ),
     });
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            jiqipeizhi:true,
+            jiqixingxi:false,
+            shebeixiaoyan:false,
+            shigonggongyi:false,
+            zhuyepeizhi:false,
+            canada: '',
+        };
+    }
+
     render(){
+        const bianchang = 100;
+        const {navigate} = this.props.navigation;
         return(
-            <Text>系统配置</Text>
+            <View style={{flex:1}}>
+                <View style={{flex:0.1,backgroundColor:'rgb(255,255,255)',flexDirection:'row'}}>
+                    <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
+                        <Text style={{fontSize:setSpText(36),color:'#333333'}}>
+                            系统配置
+                        </Text>
+                    </View>
+                    <View style={{flex:0.82,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                        <View style={{flex:0.4,flexDirection:'row',justifyContent:'space-around',}}>
+
+                        </View>
+                        <View style={{flex:0.6,flexDirection:'row'}}>
+                            <View style={{flex:0.15}}>
+
+                            </View>
+                            <View style={{flex:0.6,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                <Text style={{fontSize:setSpText(26),color:'#333333'}}>
+
+                                </Text>
+                            </View>
+                            <View style={{flex:0.25,alignItems:'flex-end'}}>
+                                <TouchableHighlight onPress={() =>navigate('Home') } style={{marginRight:scaleSize(50)}} underlayColor='#fece22'>
+                                    <Image style={{height:scaleSize(100),width:scaleSize(100)}} source = {Banner_Imgs.DRAWVIEWPAGE_BackArrowButton}/>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={{flex:0.9,backgroundColor:'rgb(0,0,0)',flexDirection:'row'}}>
+                    <View style={{flex:0.18,backgroundColor:'#292929'}}>
+
+                        <View style={{flex:(1/5),backgroundColor:(this.state.jiqipeizhi ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        jiqipeizhi:true,
+                                        jiqixingxi:false,
+                                        shebeixiaoyan:false,
+                                        shigonggongyi:false,
+                                        zhuyepeizhi:false,
+                                });
+                            }}
+                                                underlayColor = '#fece22'>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.jiqipeizhi ? '#222222' : '#ffffff')}}>
+                                    机器配置
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/5),backgroundColor:(this.state.jiqixingxi ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        jiqipeizhi:false,
+                                        jiqixingxi:true,
+                                        shebeixiaoyan:false,
+                                        shigonggongyi:false,
+                                        zhuyepeizhi:false,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.jiqixingxi ? '#222222' : '#ffffff')}}>
+                                    机器信息
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/5),backgroundColor:(this.state.shebeixiaoyan ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        jiqipeizhi:false,
+                                        jiqixingxi:false,
+                                        shebeixiaoyan:true,
+                                        shigonggongyi:false,
+                                        zhuyepeizhi:false,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.shebeixiaoyan ? '#222222' : '#ffffff')}}>
+                                    设备校验
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/5),backgroundColor:(this.state.shigonggongyi ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        jiqipeizhi:false,
+                                        jiqixingxi:false,
+                                        shebeixiaoyan:false,
+                                        shigonggongyi:true,
+                                        zhuyepeizhi:false,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.shigonggongyi ? '#222222' : '#ffffff')}}>
+                                    施工工艺
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/5),backgroundColor:(this.state.zhuyepeizhi ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        jiqipeizhi:false,
+                                        jiqixingxi:false,
+                                        shebeixiaoyan:false,
+                                        shigonggongyi:false,
+                                        zhuyepeizhi:true,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.zhuyepeizhi ? '#222222' : '#ffffff')}}>
+                                    主页配置
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                    </View>
+                    <View style={{flex:0.82,backgroundColor:'rgb(0,255,0)'}}>
+
+                        {this.state.jiqipeizhi?<Text> 机器配置</Text>:this.state.jiqixingxi?<Text>机器信息</Text>:this.state.shebeixiaoyan?<Text>设备校验</Text>:
+                            this.state.shigonggongyi?<Text>施工工艺</Text>:this.state.zhuyepeizhi?<Text>主页配置</Text>:<Text>无数据</Text>}
+                    </View>
+                </View>
+            </View>
         );
     }
 }
@@ -104,9 +785,120 @@ class NetworkSettingsView extends Component{
         ),
     });
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            WIFIredian:true,
+            shujutongbu:false,
+            GNSSjizhan:false,
+            SIMkaguanli:false,
+            canada: '',
+        };
+    }
+
     render(){
+        const bianchang = 100;
+        const {navigate} = this.props.navigation;
         return(
-            <Text>网络设置</Text>
+            <View style={{flex:1}}>
+                <View style={{flex:0.1,backgroundColor:'rgb(255,255,255)',flexDirection:'row'}}>
+                    <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
+                        <Text style={{fontSize:setSpText(36),color:'#333333'}}>
+                            网络设置
+                        </Text>
+                    </View>
+                    <View style={{flex:0.82,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                        <View style={{flex:0.4,flexDirection:'row',justifyContent:'space-around',}}>
+
+                        </View>
+                        <View style={{flex:0.6,flexDirection:'row'}}>
+                            <View style={{flex:0.15}}>
+
+                            </View>
+                            <View style={{flex:0.6,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                <Text style={{fontSize:setSpText(26),color:'#333333'}}>
+
+                                </Text>
+                            </View>
+                            <View style={{flex:0.25,alignItems:'flex-end'}}>
+                                <TouchableHighlight onPress={() =>navigate('Home') } style={{marginRight:scaleSize(50)}} underlayColor='#fece22'>
+                                    <Image style={{height:scaleSize(100),width:scaleSize(100)}} source = {Banner_Imgs.DRAWVIEWPAGE_BackArrowButton}/>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={{flex:0.9,backgroundColor:'rgb(0,0,0)',flexDirection:'row'}}>
+                    <View style={{flex:0.18,backgroundColor:'#292929'}}>
+
+                        <View style={{flex:(1/4),backgroundColor:(this.state.WIFIredian ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        WIFIredian:true,
+                                        shujutongbu:false,
+                                        GNSSjizhan:false,
+                                        SIMkaguanli:false,
+                                });
+                            }}
+                                                underlayColor = '#fece22'>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.WIFIredian ? '#222222' : '#ffffff')}}>
+                                    WIFI热点设置
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/4),backgroundColor:(this.state.shujutongbu ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        WIFIredian:false,
+                                        shujutongbu:true,
+                                        GNSSjizhan:false,
+                                        SIMkaguanli:false,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.shujutongbu ? '#222222' : '#ffffff')}}>
+                                    数据同步设置
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/4),backgroundColor:(this.state.GNSSjizhan ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        WIFIredian:false,
+                                        shujutongbu:false,
+                                        GNSSjizhan:true,
+                                        SIMkaguanli:false,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.GNSSjizhan ? '#222222' : '#ffffff')}}>
+                                    GNSS基站配置
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/4),backgroundColor:(this.state.SIMkaguanli ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        WIFIredian:false,
+                                        shujutongbu:false,
+                                        GNSSjizhan:false,
+                                        SIMkaguanli:true,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.SIMkaguanli ? '#222222' : '#ffffff')}}>
+                                    SIM卡管理
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                    </View>
+                    <View style={{flex:0.82,backgroundColor:'rgb(0,255,0)'}}>
+                        {this.state.WIFIredian?<Text> WIFI热点设置</Text>:this.state.shujutongbu?<Text>数据同步设置</Text>:this.state.GNSSjizhan?<Text>GNSS基站配置</Text>:
+                            this.state.SIMkaguanli?<Text>SIM卡管理</Text>:<Text>无数据</Text>}
+                    </View>
+                </View>
+            </View>
         );
     }
 }
@@ -122,9 +914,121 @@ class SatelliteStateView extends Component{
         ),
     });
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            GNSS1:true,
+            GNSS2:false,
+            ceshiGNSS:false,
+            chafenshuju:false,
+            canada: '',
+        };
+    }
+
     render(){
+        const bianchang = 100;
+        const {navigate} = this.props.navigation;
         return(
-            <Text>卫星状态</Text>
+            <View style={{flex:1}}>
+                <View style={{flex:0.1,backgroundColor:'rgb(255,255,255)',flexDirection:'row'}}>
+                    <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
+                        <Text style={{fontSize:setSpText(36),color:'#333333'}}>
+                            卫星状态
+                        </Text>
+                    </View>
+                    <View style={{flex:0.82,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                        <View style={{flex:0.4,flexDirection:'row',justifyContent:'space-around',}}>
+
+                        </View>
+                        <View style={{flex:0.6,flexDirection:'row'}}>
+                            <View style={{flex:0.15}}>
+
+                            </View>
+                            <View style={{flex:0.6,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                <Text style={{fontSize:setSpText(26),color:'#333333'}}>
+
+                                </Text>
+                            </View>
+                            <View style={{flex:0.25,alignItems:'flex-end'}}>
+                                <TouchableHighlight onPress={() =>navigate('Home') } style={{marginRight:scaleSize(50)}} underlayColor='#fece22'>
+                                    <Image style={{height:scaleSize(100),width:scaleSize(100)}} source = {Banner_Imgs.DRAWVIEWPAGE_BackArrowButton}/>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={{flex:0.9,backgroundColor:'rgb(0,0,0)',flexDirection:'row'}}>
+                    <View style={{flex:0.18,backgroundColor:'#292929'}}>
+
+                        <View style={{flex:(1/4),backgroundColor:(this.state.GNSS1 ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        GNSS1:true,
+                                        GNSS2:false,
+                                        ceshiGNSS:false,
+                                        chafenshuju:false,
+                                });
+                            }}
+                                                underlayColor = '#fece22'>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.GNSS1 ? '#222222' : '#ffffff')}}>
+                                    GNSS1
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/4),backgroundColor:(this.state.GNSS2 ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        GNSS1:false,
+                                        GNSS2:true,
+                                        ceshiGNSS:false,
+                                        chafenshuju:false,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.GNSS2 ? '#222222' : '#ffffff')}}>
+                                    GNSS2
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/4),backgroundColor:(this.state.ceshiGNSS ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        GNSS1:false,
+                                        GNSS2:false,
+                                        ceshiGNSS:true,
+                                        chafenshuju:false,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.ceshiGNSS ? '#222222' : '#ffffff')}}>
+                                    测试GNSS
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/4),backgroundColor:(this.state.chafenshuju ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        GNSS1:false,
+                                        GNSS2:false,
+                                        ceshiGNSS:false,
+                                        chafenshuju:true,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.chafenshuju ? '#222222' : '#ffffff')}}>
+                                    差分数据连接
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                    </View>
+                    <View style={{flex:0.82,backgroundColor:'rgb(0,255,0)'}}>
+
+                        {this.state.GNSS1?<Text> GNSS1</Text>:this.state.GNSS2?<Text>GNSS2</Text>:this.state.ceshiGNSS?<Text>测试GNSS</Text>:
+                            this.state.chafenshuju?<Text>差分数据连接</Text>:<Text>无数据</Text>}
+                    </View>
+                </View>
+            </View>
         );
     }
 }

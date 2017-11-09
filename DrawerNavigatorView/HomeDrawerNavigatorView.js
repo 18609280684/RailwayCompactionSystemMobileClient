@@ -20,7 +20,8 @@ import {
 } from '../Utils/ScreenAdaptationUtil.js';
 import {
     RequestUrl,
-    Banner_Imgs
+    Banner_Imgs,
+    Constants
 } from '../Utils/Constants.js';
 
 
@@ -45,6 +46,9 @@ class  HomeDrawerNavigatorView extends Component{
     }
 
     render(){
+        Constants.name = 'alskjdklasdlasjkd';
+        console.log('ssssssssssssssssssssssssssssssssssssss')
+        console.log(this.props);
         const bianchang = 100;
         const buttonBianchang = 160;
         const {navigate} = this.props.navigation;
@@ -222,7 +226,7 @@ class  HomeDrawerNavigatorView extends Component{
 
                         </View>
                         <View style={{flex:0.3}}>
-                            <TouchableHighlight style={{alignItems:'center',}} onPress={() => navigate('DrawerOpen')}>
+                            <TouchableHighlight style={{alignItems:'center',}} onPress={() => navigate('DrawerOpen',{picture:'xxxxxxxxxx'})}>
                                 <Image style={{height:scaleSize(108),width:scaleSize(74),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTN_Arrow}>
                                 </Image>
