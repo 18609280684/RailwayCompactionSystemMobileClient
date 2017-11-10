@@ -18,6 +18,25 @@ import {
     setSpText,
     scaleSize,
 } from '../Utils/ScreenAdaptationUtil.js';
+import  {
+    MachineConfiguration,
+    MachineInformation,
+    EquipmentCalibration,
+    ConstructionTechnology,
+    HomePageConfiguration,
+} from './SystemConfiguration';
+import {
+    WIFIHotspots,
+    DataSynchronizationSettings,
+    BaseStationConfiguration,
+    SIMCardManagement
+} from  './NetworkSettings';
+import {
+    GnssOne,
+    GnssTwo,
+    TestGnss,
+    DifferentialDataConnection
+} from './SatelliteState';
 import {
     RequestUrl,
     Banner_Imgs
@@ -765,8 +784,8 @@ class SystemConfigurationView extends Component{
                     </View>
                     <View style={{flex:0.82,backgroundColor:'rgb(0,255,0)'}}>
 
-                        {this.state.jiqipeizhi?<Text> 机器配置</Text>:this.state.jiqixingxi?<Text>机器信息</Text>:this.state.shebeixiaoyan?<Text>设备校验</Text>:
-                            this.state.shigonggongyi?<Text>施工工艺</Text>:this.state.zhuyepeizhi?<Text>主页配置</Text>:<Text>无数据</Text>}
+                        {this.state.jiqipeizhi?<MachineConfiguration />:this.state.jiqixingxi?<MachineInformation />:this.state.shebeixiaoyan?<EquipmentCalibration />:
+                            this.state.shigonggongyi?<ConstructionTechnology />:this.state.zhuyepeizhi?<HomePageConfiguration />:<Text>无数据</Text>}
                     </View>
                 </View>
             </View>
@@ -894,8 +913,8 @@ class NetworkSettingsView extends Component{
                         <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     </View>
                     <View style={{flex:0.82,backgroundColor:'rgb(0,255,0)'}}>
-                        {this.state.WIFIredian?<Text> WIFI热点设置</Text>:this.state.shujutongbu?<Text>数据同步设置</Text>:this.state.GNSSjizhan?<Text>GNSS基站配置</Text>:
-                            this.state.SIMkaguanli?<Text>SIM卡管理</Text>:<Text>无数据</Text>}
+                        {this.state.WIFIredian?<WIFIHotspots />:this.state.shujutongbu?<DataSynchronizationSettings />:this.state.GNSSjizhan?<BaseStationConfiguration />:
+                            this.state.SIMkaguanli?<SIMCardManagement />:<Text>无数据</Text>}
                     </View>
                 </View>
             </View>
@@ -1024,8 +1043,8 @@ class SatelliteStateView extends Component{
                     </View>
                     <View style={{flex:0.82,backgroundColor:'rgb(0,255,0)'}}>
 
-                        {this.state.GNSS1?<Text> GNSS1</Text>:this.state.GNSS2?<Text>GNSS2</Text>:this.state.ceshiGNSS?<Text>测试GNSS</Text>:
-                            this.state.chafenshuju?<Text>差分数据连接</Text>:<Text>无数据</Text>}
+                        {this.state.GNSS1?<GnssOne />:this.state.GNSS2?<GnssTwo />:this.state.ceshiGNSS?<TestGnss />:
+                            this.state.chafenshuju?<DifferentialDataConnection />:<Text>无数据</Text>}
                     </View>
                 </View>
             </View>
