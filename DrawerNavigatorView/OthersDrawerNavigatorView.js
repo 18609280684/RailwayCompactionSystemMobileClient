@@ -744,7 +744,7 @@ class SystemConfigurationView extends Component{
                                 });
                             }}>
                                 <Text style={{fontSize:setSpText(26),color:(this.state.shebeixiaoyan ? '#222222' : '#ffffff')}}>
-                                    设备校验
+                                    设备校准
                                 </Text>
                             </TouchableHighlight>
                         </View>
@@ -1064,8 +1064,64 @@ class AlarmSettingView extends Component{
     });
 
     render(){
+        const {navigation} = this.props;
         return(
-            <Text>报警设置</Text>
+            <View style={{flex:1,backgroundColor:'#eeeeee'}}>
+                <View style={{flex:0.11,flexDirection:'row',backgroundColor:'rgb(255,255,255)'}}>
+                    <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
+                        <Text style={{fontSize:setSpText(36),color:'#333333'}}>
+                            报警设置
+                        </Text>
+                    </View>
+                    <View style={{flex:0.82,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                        <View style={{flex:0.3,justifyContent:'center',alignItems:'center'}}>
+                            <Text style={{fontSize:setSpText(26),color:'#da251c'}}>
+
+                            </Text>
+                        </View>
+                        <View style={{flex:0.7,flexDirection:'row'}}>
+                            <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+                                <Text style={{fontSize:setSpText(26),color: '#333333'}}>
+
+                                </Text>
+                            </View>
+                            <View style={{flex:0.3,justifyContent:'center',alignItems:'center'}}>
+                                <Text style={{fontSize:setSpText(26),color:'#333333'}}>
+
+                                </Text>
+                            </View>
+                            <View style={{flex:0.3,alignItems:'flex-end'}}>
+                                <TouchableHighlight onPress={() =>navigation.goBack() } style={{marginRight:scaleSize(50)}} underlayColor='#fece22'>
+                                    <Image style={{height:scaleSize(100),width:scaleSize(100)}} source = {Banner_Imgs.DRAWVIEWPAGE_BackArrowButton}/>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={{flex:0.09,flexDirection:'row',}}>
+                </View>
+                <View style={{flex:0.7,flexDirection:'row',}}>
+
+                </View>
+                <View style={{flex:0.1,flexDirection:'row',backgroundColor:'#ffffff',}}>
+                    <View style={{flex:0.5,justifyContent:'center',}}>
+                        <Text style={{fontSize:setSpText(26),color:'#333333',marginLeft:scaleSize(50)}}>
+
+                        </Text>
+                    </View>
+                    <View style={{flex:0.5,flexDirection:'row',justifyContent:'flex-end'}}>
+
+                        <TouchableHighlight style={{flex: 0.25,backgroundColor:'#393939',alignItems:'center',justifyContent:'center',marginLeft:scaleSize(50),marginRight:scaleSize(50)}} onPress={() => Alert.alert('')} underlayColor='#fece22'>
+                            <Text style={{fontSize:setSpText(26),color:'#ffffff'}}>
+                                保存
+                            </Text>
+                        </TouchableHighlight>
+                        <View style={{flex:0.1}}>
+
+                        </View>
+                    </View>
+                </View>
+            </View>
         );
     }
 }

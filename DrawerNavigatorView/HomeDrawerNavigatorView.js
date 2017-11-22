@@ -23,6 +23,9 @@ import {
     Banner_Imgs,
     Constants
 } from '../Utils/Constants.js';
+import {
+    ServiceApi
+} from '../Utils/ApiServer.js';
 
 
 class  HomeDrawerNavigatorView extends Component{
@@ -36,6 +39,22 @@ class  HomeDrawerNavigatorView extends Component{
             />
         ),
     });
+
+    // 构造
+      constructor(props) {
+        super(props);
+
+        // 初始状态
+        this.state = {
+
+        };
+
+          //ServiceApi.request("Cache.get", {
+          //    "key": "GPS0:status"
+          //}, function($seq, $result, $info, $value) {
+          //
+          //}, 200);
+      }
 
     componentDidMount() {
         this.timer = setTimeout(() => SplashScreen.hide(), 2000);
@@ -63,6 +82,7 @@ class  HomeDrawerNavigatorView extends Component{
                             压实值
                         </Text>
                     </View>
+                    <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
                             13
@@ -71,6 +91,7 @@ class  HomeDrawerNavigatorView extends Component{
                             碾压遍数
                         </Text>
                     </View>
+                    <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
                             3.2Km/h
@@ -79,6 +100,7 @@ class  HomeDrawerNavigatorView extends Component{
                             行驶速度
                         </Text>
                     </View>
+                    <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
                             60Hz
@@ -87,6 +109,7 @@ class  HomeDrawerNavigatorView extends Component{
                             震动频率
                         </Text>
                     </View>
+                    <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
                             50Kn
@@ -95,6 +118,7 @@ class  HomeDrawerNavigatorView extends Component{
                             激振力
                         </Text>
                     </View>
+                    <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
                             40mm
@@ -103,6 +127,7 @@ class  HomeDrawerNavigatorView extends Component{
                             振幅
                         </Text>
                     </View>
+                    <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                 </View>
                <View style={styles.middleContainer}>
 
@@ -277,6 +302,8 @@ const styles = StyleSheet.create({
     }
 
 });
+
+
 
 export {
     HomeDrawerNavigatorView,

@@ -30,8 +30,8 @@ let fontScale = PixelRatio.getFontScale(); //返回字体大小缩放比例
 let pixelRatio = PixelRatio.get(); //当前设备的像素密度
 const defaultPixel = 2; //iphone6的像素密度
 //px转换成dp
-const w2 = 750 / defaultPixel;
-const h2 = 1334 / defaultPixel;
+const w2 = 800 / defaultPixel;
+const h2 = 1280 / defaultPixel;
 const scale = Math.min(deviceHeight / h2, deviceWidth / w2); //获取缩放比例
 /**
  * 设置text为sp

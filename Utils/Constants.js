@@ -44,8 +44,13 @@ const Banner_Imgs = {
 
     DATADOWNLOADING_SELECTONURL:require('../Image/DrawerNavigatorView/SelectOn.png'),
     DATADOWNLOADING_SELECTOFFURL:require('../Image/DrawerNavigatorView/SelectOff.png'),
+    SYSTEMCONFIGURR_INPUTTEXT:require('../Image/DrawerNavigatorView/InputText.png'),
+    DRAWVIEWPAGE_DropDownButtonLong:require('../Image/DrawerNavigatorView/SelectDropDownButtonLong.png'),
 
-
+    NETWORKSETTINGPAGE_SlideOnButton:require('../Image/NetworkSettings/SlideOn.png'),
+    NETWORKSETTINGPAGE_SlideOffButton:require('../Image/NetworkSettings/SlideOff.png'),
+    NETWORKSETTINGPAGE_SelectOnButton:require('../Image/NetworkSettings/SelectOn.png'),
+    NETWORKSETTINGPAGE_SelectOffButton:require('../Image/NetworkSettings/SelectOff.png'),
 };
 
 export {
