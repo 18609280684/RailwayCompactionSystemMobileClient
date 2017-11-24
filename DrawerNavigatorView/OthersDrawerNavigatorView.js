@@ -272,7 +272,7 @@ class DaydataView extends Component{
                                 </View>
                             </View>
                             <View style={{flex:0.3,backgroundColor:'rgb(0,0,0)'}}>
-
+                                <Echarts option={option} height={150} width = {200} />
                             </View>
                         </View>
                         <View style={{flex:0.8,backgroundColor:'rgb(255,255,0)'}}>
