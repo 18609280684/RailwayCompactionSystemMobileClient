@@ -9,7 +9,10 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Image,
+  TouchableHighlight,
+  Alert,
 } from 'react-native';
 import {
     StackNavigator,
@@ -94,23 +97,23 @@ const RootDrawerNavigator = DrawerNavigator({
             fontSize:setSpText(26),
             color:'rgb(255,255,255)',
             justifyContent:'flex-start',
-            backgroundColor:'#292929',
+            backgroundColor:'#222222',
 
         },
     },
 
-    //contentComponent: props =>{
-    //    console.log('ooooooooooooooooooooooooooo');
-    //    //console.log(props.navigation.state.params);
-    //    console.log('lllllllllllllllllllllllllll');
-    //    //console.log(props.navigation);
-    //    return (
-    //        <Testter daili={props}/>
-    //    );
-    //},
+    contentComponent: props =>{
+        console.log('ooooooooooooooooooooooooooo');
+        //console.log(props.navigation.state.params);
+        console.log('lllllllllllllllllllllllllll');
+        //console.log(props.navigation);
+        return (
+            <SideBarView Myprops = {props}/>
+        );
+    },
 });
 
-class Testter extends Component{
+class SideBarView extends Component{
 
     // 构造
       constructor(props) {
@@ -123,11 +126,120 @@ class Testter extends Component{
 
     render(){
         console.log('nnnnnnnnnnnnnnnnnnnnnnnnnn');
-        return(
-            <Text onPress={() => this.props.daili.navigation.navigate('EquipmentDiagnosis',{name:'chenjianlong'})}>
 
-                {Constants.name}
-            </Text>
+        return(
+            <View style={{flex:1,backgroundColor:'#292929'}}>
+                <TouchableHighlight style={{flex:1/8}} onPress={() => this.props.Myprops.navigation.navigate('Daydata')} underlayColor = '#fece22'>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                       <Image
+                           source={Banner_Imgs.DRAWVIEWPAGE_TodayData}
+                           style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
+                       />
+                       <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                           当日数据
+                       </Text>
+                    </View>
+                </TouchableHighlight>
+                <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+
+                <TouchableHighlight style={{flex:1/8}} onPress={() => this.props.Myprops.navigation.navigate('DataDownloading')} underlayColor = '#fece22'>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+
+                        <Image
+                            source={Banner_Imgs.DRAWVIEWPAGE_DataDownloading}
+                            style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
+                        />
+                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                            数据下载
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+                <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+
+                <TouchableHighlight style={{flex:1/8}} onPress={() => this.props.Myprops.navigation.navigate('EquipmentDiagnosis')} underlayColor = '#fece22'>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+
+                        <Image
+                            source={Banner_Imgs.DRAWVIEWPAGE_EquipmentDiagnosis}
+                            style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
+                        />
+                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                            设备诊断
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+                <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+
+                <TouchableHighlight style={{flex:1/8}} onPress={() => this.props.Myprops.navigation.navigate('SystemConfiguration')} underlayColor = '#fece22'>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+
+                        <Image
+                            source={Banner_Imgs.DRAWVIEWPAGE_SystemConfiguration}
+                            style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
+                        />
+                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                            系统配置
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+                <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+
+                <TouchableHighlight style={{flex:1/8}} onPress={() => this.props.Myprops.navigation.navigate('NetworkSettings')} underlayColor = '#fece22'>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+
+                        <Image
+                            source={Banner_Imgs.DRAWVIEWPAGE_NetworkSettings}
+                            style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
+                        />
+                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                            网络设置
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+                <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+
+                <TouchableHighlight style={{flex:1/8}} onPress={() => this.props.Myprops.navigation.navigate('SatelliteState')} underlayColor = '#fece22'>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+
+                        <Image
+                            source={Banner_Imgs.DRAWVIEWPAGE_SatelliteState}
+                            style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
+                        />
+                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                            卫星状态
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+                <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+
+                <TouchableHighlight style={{flex:1/8}} onPress={() => this.props.Myprops.navigation.navigate('AlarmSetting')} underlayColor = '#fece22'>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+
+                        <Image
+                            source={Banner_Imgs.DRAWVIEWPAGE_AlarmSetting}
+                            style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
+                        />
+                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                            报警设置
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+                <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+
+                <TouchableHighlight style={{flex:1/8}} onPress={() => this.props.Myprops.navigation.navigate('SystemUpgrade')} underlayColor = '#fece22'>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+
+                        <Image
+                            source={Banner_Imgs.DRAWVIEWPAGE_SystemUpgrade}
+                            style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
+                        />
+                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                            系统升级
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+                <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+            </View>
         );
     }
 }

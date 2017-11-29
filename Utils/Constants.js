@@ -30,6 +30,7 @@ const Banner_Imgs = {
     HOMEPAGEBUTTN_Arrow:require('../Image/Home/Arrow.png'),
 
 
+
     DRAWVIEWPAGE_TodayData:require('../Image/DrawerNavigatorView/TodayData.png'),
     DRAWVIEWPAGE_DataDownloading:require('../Image/DrawerNavigatorView/DataDownloading.png'),
     DRAWVIEWPAGE_EquipmentDiagnosis:require('../Image/DrawerNavigatorView/EquipmentDiagnosis.png'),
@@ -41,6 +42,7 @@ const Banner_Imgs = {
     HOMEPAGECELL_Cell:require('../Image/DrawerNavigatorView/cell.png'),
     DRAWVIEWPAGE_DropDownButton:require('../Image/DrawerNavigatorView/SelectDropDownButton.png'),
     DRAWVIEWPAGE_BackArrowButton:require('../Image/DrawerNavigatorView/BackArrow.png'),
+    DRAWVIEWPAGE_NavigationBg:require('../Image/DrawerNavigatorView/navigationBg.png'),
 
     DATADOWNLOADING_SELECTONURL:require('../Image/DrawerNavigatorView/SelectOn.png'),
     DATADOWNLOADING_SELECTOFFURL:require('../Image/DrawerNavigatorView/SelectOff.png'),

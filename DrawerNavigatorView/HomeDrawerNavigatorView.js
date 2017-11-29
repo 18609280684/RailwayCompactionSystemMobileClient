@@ -9,7 +9,8 @@ import {
     View,
     Image,
     TouchableHighlight,
-    Alert
+    Alert,
+    WebView
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {
@@ -27,7 +28,7 @@ import {
     ServiceApi
 } from '../Utils/ApiServer.js';
 
-
+var WEBVIEW_REF = 'webview';
 class  HomeDrawerNavigatorView extends Component{
 
     static navigationOptions = ({navigation}) => ({
@@ -46,15 +47,66 @@ class  HomeDrawerNavigatorView extends Component{
 
         // 初始状态
         this.state = {
+            //压实值
+            evc:40,
+            //碾压遍数
+            rollingPasses:10,
+            //行驶速度
+            travelSpeed:5.3,
+            //震动频率
+            frequency:60,
+            //激振力
+            excitingForce:12,
+            //振幅
+            amplitude:0.3,
 
         };
 
-          //ServiceApi.request("Cache.get", {
-          //    "key": "GPS0:status"
-          //}, function($seq, $result, $info, $value) {
-          //
-          //}, 200);
+          ServiceApi.request("Cache.get",{
+              "key":"Sensor:Dense:data"
+          },($seq, $result, $info, $value) => {
+                if(this.state.evc !=  $value.ecv)
+                {
+                    this.setState({
+                        evc:$value.ecv,
+                    });
+                }
+              if(this.state.rollingPasses !=  $value.ecv)
+              {
+                  this.setState({
+                      rollingPasses:$value.ecv,
+                  });
+              }
+              if(this.state.travelSpeed !=  $value.ecv)
+              {
+                  this.setState({
+                      travelSpeed:$value.ecv,
+                  });
+              }
+              if(this.state.frequency !=  $value.ecv)
+              {
+                  this.setState({
+                      frequency:$value.freq,
+                  });
+              }
+              if(this.state.excitingForce !=  $value.ecv)
+              {
+                  this.setState({
+                      excitingForce:$value.force,
+                  });
+              }
+              if(this.state.amplitude !=  $value.ecv)
+              {
+                  this.setState({
+                      amplitude:$value.amp,
+                  });
+              }
+          },1000);
       }
+
+    test(){
+
+    }
 
     componentDidMount() {
         this.timer = setTimeout(() => SplashScreen.hide(), 2000);
@@ -63,6 +115,11 @@ class  HomeDrawerNavigatorView extends Component{
     componentWillMount() {
         this.timer && clearTimeout(this.timer);
     }
+
+    onShouldStartLoadWithRequest = (event) => {
+        // Implement any custom loading logic here, don't forget to return!
+        return true;
+    };
 
     render(){
         Constants.name = 'alskjdklasdlasjkd';
@@ -76,7 +133,7 @@ class  HomeDrawerNavigatorView extends Component{
                 <View style={styles.leftContainer}>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
-                            30
+                            {this.state.evc}
                         </Text>
                         <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
                             压实值
@@ -85,7 +142,7 @@ class  HomeDrawerNavigatorView extends Component{
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
-                            13
+                            {this.state.rollingPasses}
                         </Text>
                         <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
                             碾压遍数
@@ -94,7 +151,7 @@ class  HomeDrawerNavigatorView extends Component{
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
-                            3.2Km/h
+                            {this.state.travelSpeed}Km/h
                         </Text>
                         <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
                             行驶速度
@@ -103,7 +160,7 @@ class  HomeDrawerNavigatorView extends Component{
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
-                            60Hz
+                            {this.state.frequency}Hz
                         </Text>
                         <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
                             震动频率
@@ -112,7 +169,7 @@ class  HomeDrawerNavigatorView extends Component{
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
-                            50Kn
+                            {this.state.excitingForce}Kn
                         </Text>
                         <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
                             激振力
@@ -121,7 +178,7 @@ class  HomeDrawerNavigatorView extends Component{
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
-                            40mm
+                            {this.state.amplitude}mm
                         </Text>
                         <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
                             振幅
@@ -130,7 +187,19 @@ class  HomeDrawerNavigatorView extends Component{
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                 </View>
                <View style={styles.middleContainer}>
-
+                   <WebView
+                       ref={WEBVIEW_REF}
+                       automaticallyAdjustContentInsets={false}
+                       style={styles.webView}
+                       source={{uri: 'http://192.168.0.63:8080/cocos2d-js-v3.6/samples/js-tests/'}}
+                       javaScriptEnabled={true}
+                       domStorageEnabled={true}
+                       decelerationRate="normal"
+                       automaticallyAdjustContentInsets = {true}
+                       onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+                       startInLoadingState={true}
+                       scalesPageToFit={true}
+                   />
                </View>
                <View style={styles.rightContainer}>
                    <View style={{flex:0.1,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
@@ -299,7 +368,11 @@ const styles = StyleSheet.create({
     drawerNavigatorIcon:{
         width:scaleSize(70),
         height:scaleSize(70),
-    }
+    },
+    webView: {
+        backgroundColor: 'rgba(255,255,255,0.8)',
+        flex:1
+    },
 
 });
 
