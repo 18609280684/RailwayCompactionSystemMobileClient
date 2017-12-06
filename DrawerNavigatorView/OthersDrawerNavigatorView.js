@@ -25,6 +25,7 @@ import  {
     EquipmentCalibration,
     ConstructionTechnology,
     HomePageConfiguration,
+    MachineSize
 } from './SystemConfiguration';
 import {
     WIFIHotspots,
@@ -668,6 +669,7 @@ class SystemConfigurationView extends Component{
             shebeixiaoyan:false,
             shigonggongyi:false,
             zhuyepeizhi:false,
+            jiqichicun:false,
             canada: '',
         };
     }
@@ -709,7 +711,7 @@ class SystemConfigurationView extends Component{
                 <View style={{flex:0.9,backgroundColor:'rgb(0,0,0)',flexDirection:'row'}}>
                     <View style={{flex:0.18,backgroundColor:'#292929'}}>
 
-                        <View style={{flex:(1/5),backgroundColor:(this.state.jiqipeizhi ? '#fece22' : '#292929'),}}>
+                        <View style={{flex:(1/6),backgroundColor:(this.state.jiqipeizhi ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
                                 this.setState({
                                         jiqipeizhi:true,
@@ -717,6 +719,7 @@ class SystemConfigurationView extends Component{
                                         shebeixiaoyan:false,
                                         shigonggongyi:false,
                                         zhuyepeizhi:false,
+                                        jiqichicun:false,
                                 });
                             }}
                                                 underlayColor = '#fece22'>
@@ -726,7 +729,7 @@ class SystemConfigurationView extends Component{
                             </TouchableHighlight>
                         </View>
                         <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
-                        <View style={{flex:(1/5),backgroundColor:(this.state.jiqixingxi ? '#fece22' : '#292929'),}}>
+                        <View style={{flex:(1/6),backgroundColor:(this.state.jiqixingxi ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
                                 this.setState({
                                         jiqipeizhi:false,
@@ -734,6 +737,7 @@ class SystemConfigurationView extends Component{
                                         shebeixiaoyan:false,
                                         shigonggongyi:false,
                                         zhuyepeizhi:false,
+                                        jiqichicun:false,
                                 });
                             }}>
                                 <Text style={{fontSize:setSpText(26),color:(this.state.jiqixingxi ? '#222222' : '#ffffff')}}>
@@ -742,7 +746,7 @@ class SystemConfigurationView extends Component{
                             </TouchableHighlight>
                         </View>
                         <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
-                        <View style={{flex:(1/5),backgroundColor:(this.state.shebeixiaoyan ? '#fece22' : '#292929'),}}>
+                        <View style={{flex:(1/6),backgroundColor:(this.state.shebeixiaoyan ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
                                 this.setState({
                                         jiqipeizhi:false,
@@ -750,6 +754,7 @@ class SystemConfigurationView extends Component{
                                         shebeixiaoyan:true,
                                         shigonggongyi:false,
                                         zhuyepeizhi:false,
+                                        jiqichicun:false,
                                 });
                             }}>
                                 <Text style={{fontSize:setSpText(26),color:(this.state.shebeixiaoyan ? '#222222' : '#ffffff')}}>
@@ -758,7 +763,7 @@ class SystemConfigurationView extends Component{
                             </TouchableHighlight>
                         </View>
                         <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
-                        <View style={{flex:(1/5),backgroundColor:(this.state.shigonggongyi ? '#fece22' : '#292929'),}}>
+                        <View style={{flex:(1/6),backgroundColor:(this.state.shigonggongyi ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
                                 this.setState({
                                         jiqipeizhi:false,
@@ -766,6 +771,7 @@ class SystemConfigurationView extends Component{
                                         shebeixiaoyan:false,
                                         shigonggongyi:true,
                                         zhuyepeizhi:false,
+                                        jiqichicun:false,
                                 });
                             }}>
                                 <Text style={{fontSize:setSpText(26),color:(this.state.shigonggongyi ? '#222222' : '#ffffff')}}>
@@ -774,7 +780,24 @@ class SystemConfigurationView extends Component{
                             </TouchableHighlight>
                         </View>
                         <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
-                        <View style={{flex:(1/5),backgroundColor:(this.state.zhuyepeizhi ? '#fece22' : '#292929'),}}>
+                        <View style={{flex:(1/6),backgroundColor:(this.state.jiqichicun ? '#fece22' : '#292929'),}}>
+                            <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                                this.setState({
+                                        jiqipeizhi:false,
+                                        jiqixingxi:false,
+                                        shebeixiaoyan:false,
+                                        shigonggongyi:false,
+                                        zhuyepeizhi:false,
+                                        jiqichicun:true,
+                                });
+                            }}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.jiqichicun ? '#222222' : '#ffffff')}}>
+                                    机器尺寸
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
+                        <View style={{flex:(1/6),backgroundColor:(this.state.zhuyepeizhi ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
                                 this.setState({
                                         jiqipeizhi:false,
@@ -782,6 +805,7 @@ class SystemConfigurationView extends Component{
                                         shebeixiaoyan:false,
                                         shigonggongyi:false,
                                         zhuyepeizhi:true,
+                                        jiqichicun:false,
                                 });
                             }}>
                                 <Text style={{fontSize:setSpText(26),color:(this.state.zhuyepeizhi ? '#222222' : '#ffffff')}}>
@@ -794,7 +818,7 @@ class SystemConfigurationView extends Component{
                     <View style={{flex:0.82,backgroundColor:'rgb(0,255,0)'}}>
 
                         {this.state.jiqipeizhi?<MachineConfiguration />:this.state.jiqixingxi?<MachineInformation />:this.state.shebeixiaoyan?<EquipmentCalibration />:
-                            this.state.shigonggongyi?<ConstructionTechnology />:this.state.zhuyepeizhi?<HomePageConfiguration />:<Text>无数据</Text>}
+                            this.state.shigonggongyi?<ConstructionTechnology />:this.state.zhuyepeizhi?<HomePageConfiguration />:this.state.jiqichicun?<MachineSize />:<Text>无数据</Text>}
                     </View>
                 </View>
             </View>

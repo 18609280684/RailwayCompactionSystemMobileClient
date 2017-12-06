@@ -500,10 +500,259 @@ class HomePageConfiguration extends Component{
     }
 }
 
+class MachineSize extends Component{
+
+    // 构造
+      constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            selectButton:true,
+        };
+      }
+
+    render(){
+        return(
+            <View style={{flex:1,backgroundColor:'#eeeeee'}}>
+                <View style={{flex:0.1,backgroundColor:'#ffffff',flexDirection:'row'}}>
+                    <View style={{flex:0.5,flexDirection:'row',justifyContent:'center'}}>
+                        <TouchableHighlight style={{height:scaleSize(120),flex: 0.4,backgroundColor:(this.state.selectButton?'#fece22':'#393939'),alignItems:'center',justifyContent:'center'}} onPress={() => this.setState({
+                            selectButton:true,
+                        })} underlayColor='#fece22'>
+                            <Text style={{fontSize:setSpText(26),color:(this.state.selectButton?'#000000':'#ffffff')}}>
+                                机器尺寸
+                            </Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={{height:scaleSize(120),flex: 0.4,backgroundColor:(!this.state.selectButton?'#fece22':'#393939'),alignItems:'center',justifyContent:'center',marginLeft:scaleSize(50),}} onPress={() => this.setState({
+                             selectButton:false,
+                        }) } underlayColor='#fece22'>
+                            <Text style={{fontSize:setSpText(26),color:(!this.state.selectButton?'#000000':'#ffffff')}}>
+                                天线位置
+                            </Text>
+                        </TouchableHighlight>
+                    </View>
+                    <View style={{flex:0.5}}>
+
+                    </View>
+                </View>
+
+                { this.state.selectButton ?
+                    <View style={{flex:0.9,flexDirection:'row'}}>
+
+                        <View style={{flex:0.6}}>
+                            <View style={{flex:0.6}}>
+                                <View
+                                    style={{flex:1/4,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(24),color: '#333333',}}>
+                                        D:
+                                    </Text>
+                                    <Image style={{width:scaleSize(480),height:scaleSize(90),marginLeft:scaleSize(20)}}
+                                           source={Banner_Imgs.SYSTEMCONFIGURR_INPUTTEXT}>
+                                        <TextInput
+                                            style={{width:scaleSize(400),fontSize:setSpText(18),color:'#333333', height:scaleSize(100)}}
+                                            onChangeText={(text) => this.state.machineName = text}
+                                            placeholder="振动轮直径"
+                                            placeholderTextColor='gray'
+                                            secureTextEntry={false}
+                                            underlineColorAndroid='transparent'
+                                        />
+                                    </Image>
+                                    <Text style={{fontSize:setSpText(18),color:'gray'}}>
+                                        数字（两位小数）、不为空
+                                    </Text>
+                                </View>
+                                <View
+                                    style={{flex:1/4,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(24),color: '#333333',}}>
+                                        E:
+                                    </Text>
+                                    <Image style={{width:scaleSize(480),height:scaleSize(90),marginLeft:scaleSize(20)}}
+                                           source={Banner_Imgs.SYSTEMCONFIGURR_INPUTTEXT}>
+                                        <TextInput
+                                            style={{width:scaleSize(400),fontSize:setSpText(18),color:'#333333', height:scaleSize(100)}}
+                                            onChangeText={(text) => this.state.machineName = text}
+                                            placeholder="振动轮宽度"
+                                            placeholderTextColor='gray'
+                                            secureTextEntry={false}
+                                            underlineColorAndroid='transparent'
+                                        />
+                                    </Image>
+                                    <Text style={{fontSize:setSpText(18),color:'gray'}}>
+                                        数字（两位小数）、不为空
+                                    </Text>
+                                </View>
+                                <View
+                                    style={{flex:1/4,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(24),color: '#333333',}}>
+                                        G:
+                                    </Text>
+                                    <Image style={{width:scaleSize(480),height:scaleSize(90),marginLeft:scaleSize(20)}}
+                                           source={Banner_Imgs.SYSTEMCONFIGURR_INPUTTEXT}>
+                                        <TextInput
+                                            style={{width:scaleSize(400),fontSize:setSpText(18),color:'#333333', height:scaleSize(100)}}
+                                            onChangeText={(text) => this.state.machineName = text}
+                                            placeholder="振动轮轴心到震动轮托盘的最前面"
+                                            placeholderTextColor='gray'
+                                            secureTextEntry={false}
+                                            underlineColorAndroid='transparent'
+                                        />
+                                    </Image>
+                                    <Text style={{fontSize:setSpText(18),color:'gray'}}>
+                                        数字（两位小数）、不为空
+                                    </Text>
+                                </View>
+                                <View
+                                    style={{flex:1/4,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(24),color: '#333333',}}>
+                                        H:
+                                    </Text>
+                                    <Image style={{width:scaleSize(480),height:scaleSize(90),marginLeft:scaleSize(20)}}
+                                           source={Banner_Imgs.SYSTEMCONFIGURR_INPUTTEXT}>
+                                        <TextInput
+                                            style={{width:scaleSize(400),fontSize:setSpText(18),color:'#333333', height:scaleSize(100)}}
+                                            onChangeText={(text) => this.state.machineName = text}
+                                            placeholder="振动轮轴心到车头部的距离"
+                                            placeholderTextColor='gray'
+                                            secureTextEntry={false}
+                                            underlineColorAndroid='transparent'
+                                        />
+                                    </Image>
+                                    <Text style={{fontSize:setSpText(18),color:'gray'}}>
+                                        数字（两位小数）、不为空
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={{flex:0.4,alignItems:'center'}}>
+                                <TouchableHighlight
+                                    style={{height:scaleSize(120),width:scaleSize(300),backgroundColor:'#393939',alignItems:'center',justifyContent:'center'}}
+                                    onPress={() => Alert.alert('')} underlayColor='#fece22'>
+                                    <Text style={{fontSize:setSpText(26),color:'#ffffff'}}>
+                                        保存
+                                    </Text>
+                                </TouchableHighlight>
+                                <Text style={{fontSize:setSpText(18),color:'#333333'}}>D：振动轮直径 E：振动轮宽度</Text>
+                                <Text style={{fontSize:setSpText(18),color:'#333333'}}>G：振动轮轴心到振动轮拖盘的最前面距离</Text>
+                                <Text style={{fontSize:setSpText(18),color:'#333333'}}>H：振动轮轴心到车头部的距离</Text>
+                            </View>
+                        </View>
+                        < View style={{flex:0.4,}}>
+
+                        </View>
+                    </View>
+                    :
+                    <View style={{flex:0.9,flexDirection:'row'}}>
+                        <View style={{flex:0.6}}>
+                            <View style={{flex:0.6}}>
+                                <View
+                                    style={{flex:1/4,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(24),color: '#333333',}}>
+                                        A:
+                                    </Text>
+                                    <Image style={{width:scaleSize(480),height:scaleSize(90),marginLeft:scaleSize(20)}}
+                                           source={Banner_Imgs.SYSTEMCONFIGURR_INPUTTEXT}>
+                                        <TextInput
+                                            style={{width:scaleSize(400),fontSize:setSpText(18),color:'#333333', height:scaleSize(100)}}
+                                            onChangeText={(text) => this.state.machineName = text}
+                                            placeholder="振动轮轴心到天线的横向距离"
+                                            placeholderTextColor='gray'
+                                            secureTextEntry={false}
+                                            underlineColorAndroid='transparent'
+                                        />
+                                    </Image>
+                                    <Text style={{fontSize:setSpText(18),color:'gray'}}>
+                                        数字（两位小数）、不为空
+                                    </Text>
+                                </View>
+                                <View
+                                    style={{flex:1/4,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(24),color: '#333333',}}>
+                                        B:
+                                    </Text>
+                                    <Image style={{width:scaleSize(480),height:scaleSize(90),marginLeft:scaleSize(20)}}
+                                           source={Banner_Imgs.SYSTEMCONFIGURR_INPUTTEXT}>
+                                        <TextInput
+                                            style={{width:scaleSize(400),fontSize:setSpText(18),color:'#333333', height:scaleSize(100)}}
+                                            onChangeText={(text) => this.state.machineName = text}
+                                            placeholder="天线到震动轮底部的垂直距离"
+                                            placeholderTextColor='gray'
+                                            secureTextEntry={false}
+                                            underlineColorAndroid='transparent'
+                                        />
+                                    </Image>
+                                    <Text style={{fontSize:setSpText(18),color:'gray'}}>
+                                        数字（两位小数）、不为空
+                                    </Text>
+                                </View>
+                                <View
+                                    style={{flex:1/4,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(24),color: '#333333',}}>
+                                        C1:
+                                    </Text>
+                                    <Image style={{width:scaleSize(480),height:scaleSize(90),marginLeft:scaleSize(20)}}
+                                           source={Banner_Imgs.SYSTEMCONFIGURR_INPUTTEXT}>
+                                        <TextInput
+                                            style={{width:scaleSize(400),fontSize:setSpText(18),color:'#333333', height:scaleSize(100)}}
+                                            onChangeText={(text) => this.state.machineName = text}
+                                            placeholder="天线1与振动轮右侧水平距离"
+                                            placeholderTextColor='gray'
+                                            secureTextEntry={false}
+                                            underlineColorAndroid='transparent'
+                                        />
+                                    </Image>
+                                    <Text style={{fontSize:setSpText(18),color:'gray'}}>
+                                        数字（两位小数）、不为空
+                                    </Text>
+                                </View>
+                                <View
+                                    style={{flex:1/4,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <Text style={{fontSize:setSpText(24),color: '#333333',}}>
+                                        C2:
+                                    </Text>
+                                    <Image style={{width:scaleSize(480),height:scaleSize(90),marginLeft:scaleSize(20)}}
+                                           source={Banner_Imgs.SYSTEMCONFIGURR_INPUTTEXT}>
+                                        <TextInput
+                                            style={{width:scaleSize(400),fontSize:setSpText(18),color:'#333333', height:scaleSize(100)}}
+                                            onChangeText={(text) => this.state.machineName = text}
+                                            placeholder="天线2与振动轮右侧水平距离"
+                                            placeholderTextColor='gray'
+                                            secureTextEntry={false}
+                                            underlineColorAndroid='transparent'
+                                        />
+                                    </Image>
+                                    <Text style={{fontSize:setSpText(18),color:'gray'}}>
+                                        数字（两位小数）、不为空
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={{flex:0.4,alignItems:'center'}}>
+                                <TouchableHighlight
+                                    style={{height:scaleSize(120),width:scaleSize(300),backgroundColor:'#393939',alignItems:'center',justifyContent:'center'}}
+                                    onPress={() => Alert.alert('')} underlayColor='#fece22'>
+                                    <Text style={{fontSize:setSpText(26),color:'#ffffff'}}>
+                                        保存
+                                    </Text>
+                                </TouchableHighlight>
+                                <Text style={{fontSize:setSpText(18),color:'#333333'}}>A：振动轮轴心到天线的横向距离</Text>
+                                <Text style={{fontSize:setSpText(18),color:'#333333'}}>B：天线到振动轮底部的垂直距离</Text>
+                                <Text style={{fontSize:setSpText(18),color:'#333333'}}>C1、C2：天线与振动轮右侧水平距离</Text>
+                            </View>
+                        </View>
+                        < View style={{flex:0.4,}}>
+
+                        </View>
+                    </View>
+                }
+            </View>
+        );
+    }
+}
+
+
 export {
     MachineConfiguration,
     MachineInformation,
     EquipmentCalibration,
     ConstructionTechnology,
     HomePageConfiguration,
+    MachineSize,
 };

@@ -27,9 +27,11 @@ import {
 import {
     ServiceApi
 } from '../Utils/ApiServer.js';
+import Echarts from 'native-echarts';
 
 var WEBVIEW_REF = 'webview';
 class  HomeDrawerNavigatorView extends Component{
+    _isMounted = true;
 
     static navigationOptions = ({navigation}) => ({
         drawerLabel:'首页显示',
@@ -59,75 +61,213 @@ class  HomeDrawerNavigatorView extends Component{
             excitingForce:12,
             //振幅
             amplitude:0.3,
-
+            //GPS1状态
+            gpsStateOne:'',
+            //GPS2状态
+            gpsStateTwo:'',
+            //信号强度
+            signalIntensity:'',
+            //当前页面状态
+            currentState:1,
         };
-
-          ServiceApi.request("Cache.get",{
-              "key":"Sensor:Dense:data"
-          },($seq, $result, $info, $value) => {
-                if(this.state.evc !=  $value.ecv)
-                {
-                    this.setState({
-                        evc:$value.ecv,
-                    });
-                }
-              if(this.state.rollingPasses !=  $value.ecv)
-              {
-                  this.setState({
-                      rollingPasses:$value.ecv,
-                  });
-              }
-              if(this.state.travelSpeed !=  $value.ecv)
-              {
-                  this.setState({
-                      travelSpeed:$value.ecv,
-                  });
-              }
-              if(this.state.frequency !=  $value.ecv)
-              {
-                  this.setState({
-                      frequency:$value.freq,
-                  });
-              }
-              if(this.state.excitingForce !=  $value.ecv)
-              {
-                  this.setState({
-                      excitingForce:$value.force,
-                  });
-              }
-              if(this.state.amplitude !=  $value.ecv)
-              {
-                  this.setState({
-                      amplitude:$value.amp,
-                  });
-              }
-          },1000);
       }
 
-    test(){
 
-    }
 
     componentDidMount() {
         this.timer = setTimeout(() => SplashScreen.hide(), 2000);
+
     }
 
     componentWillMount() {
+        this._isMounted = true;
         this.timer && clearTimeout(this.timer);
+        //侧边栏运行状态数据
+        ServiceApi.request("Cache.get",{
+            "key":"Sensor:Dense:data"
+
+        },($seq, $result, $info, $value) => {
+            if(this.state.evc !=  $value.ecv && this._isMounted)
+            {
+                this.setState({
+                    evc:$value.ecv,
+                });
+            }
+            if(this.state.rollingPasses !=  $value.ecv && this._isMounted)
+            {
+                this.setState({
+                    rollingPasses:$value.ecv,
+                });
+            }
+
+            if(this.state.frequency !=  $value.ecv && this._isMounted)
+            {
+                this.setState({
+                    frequency:$value.freq,
+                });
+            }
+            if(this.state.excitingForce !=  $value.ecv && this._isMounted)
+            {
+                this.setState({
+                    excitingForce:$value.force,
+                });
+            }
+            if(this.state.amplitude !=  $value.ecv && this._isMounted)
+            {
+                this.setState({
+                    amplitude:$value.amp,
+                });
+            }
+        },1000);
+
+        //GPS0状态
+        ServiceApi.request("Cache.get",{
+            "key":"Sensor:GPS0:status"
+        },($seq, $result, $info, $value) => {
+            if(this._isMounted) {
+                this.setState({
+                    gpsStateOne: $value,
+                });
+            }
+        },10000);
+        //GPS1状态
+        ServiceApi.request("Cache.get",{
+            "key":"Sensor:GPS1:status"
+        },($seq, $result, $info, $value) => {
+            if(this._isMounted) {
+            this.setState({
+                gpsStateTwo:$value,
+            });
+            }
+        },10000);
+
+        //定位信息
+        ServiceApi.request("Cache.get",{
+            "key":"Sensor:GPS0:data"
+        },($seq, $result, $info, $value) => {
+            if(this.state.travelSpeed !=  $value.speed && this._isMounted)
+            {
+                this.setState({
+                    travelSpeed:$value.speed,
+                });
+            }
+        },1000);
+
+        ServiceApi.request("Cache.get",{
+            "key":"sys:dialup"
+        },($seq, $result, $info, $value) => {
+            console.log("$value.status.signal_quality:" + $value.status.signal_quality);
+            if(this.state.signalIntensity !=  $value.status.signal_quality && this._isMounted)
+            {
+                this.setState({
+                    signalIntensity:$value.status.signal_quality,
+                });
+            }
+        },0);
     }
+
 
     onShouldStartLoadWithRequest = (event) => {
         // Implement any custom loading logic here, don't forget to return!
         return true;
     };
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     render(){
-        Constants.name = 'alskjdklasdlasjkd';
-        console.log('ssssssssssssssssssssssssssssssssssssss')
-        console.log(this.props);
+
         const bianchang = 100;
         const buttonBianchang = 160;
         const {navigate} = this.props.navigation;
+        var colors = ['#5793f3', '#d14a61', '#675bba'];
+        const option = {
+            tooltip: {
+                trigger: 'none',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            legend: {
+                data:['速度', '2016 降水量']
+            },
+            grid: {
+                top: 70,
+                bottom: 50
+            },
+            xAxis: [
+                {
+                    type: 'value',
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    axisLine: {
+                        onZero: false,
+                        lineStyle: {
+                            color: colors[1]
+                        }
+                    },
+                    axisPointer: {
+                        label: {
+                            formatter: function (params) {
+                                return '降水量  ' + params.value
+                                    + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                            }
+                        }
+                    },
+                    data: ["2016-1", "2016-2", "2016-3", "2016-4", "2016-5", "2016-6", "2016-7", "2016-8", "2016-9", "2016-10", "2016-11", "2016-12"]
+                },
+                {
+                    type: 'category',
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    axisLine: {
+                        onZero: false,
+                        lineStyle: {
+                            color: colors[0]
+                        }
+                    },
+                    axisPointer: {
+                        label: {
+                            formatter: function (params) {
+                                return '降水量  ' + params.value
+                                    + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                            }
+                        }
+                    },
+                    data: ["2015-1", "2015-2", "2015-3", "2015-4", "2015-5", "2015-6", "2015-7", "2015-8", "2015-9", "2015-10", "2015-11", "2015-12"]
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name:'2015 降水量',
+                    type:'line',
+                    xAxisIndex: 1,
+                    smooth: true,
+                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+
+                    markLine : {
+                        data : [
+                            // 纵轴，默认
+                            {type : 'max', name: '最大值', itemStyle:{normal:{color:'#dc143c'}}},
+                            {type : 'min', name: '最小值', itemStyle:{normal:{color:'#dc143c'}}},
+                            {type : 'average', name : '平均值', itemStyle:{normal:{color:'#dc143c'}}},
+
+                        ]
+                    }
+
+                },
+
+
+            ]
+        };
         return(
            <View style={styles.container}>
                 <View style={styles.leftContainer}>
@@ -187,19 +327,25 @@ class  HomeDrawerNavigatorView extends Component{
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                 </View>
                <View style={styles.middleContainer}>
-                   <WebView
-                       ref={WEBVIEW_REF}
-                       automaticallyAdjustContentInsets={false}
-                       style={styles.webView}
-                       source={{uri: 'http://192.168.0.63:8080/cocos2d-js-v3.6/samples/js-tests/'}}
-                       javaScriptEnabled={true}
-                       domStorageEnabled={true}
-                       decelerationRate="normal"
-                       automaticallyAdjustContentInsets = {true}
-                       onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
-                       startInLoadingState={true}
-                       scalesPageToFit={true}
-                   />
+                   {this.state.currentState == 1 ?
+                       <WebView
+                           style={{backgroundColor: 'rgba(255,255,255,0.8)',flex: 1}}
+                           source={{uri: 'http://192.168.0.63:8080/MyJSGame/index.html'}}
+                           javaScriptEnabled={true}
+                           domStorageEnabled={true}
+                           decelerationRate="normal"
+                           automaticallyAdjustContentInsets={false}
+                           onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+                           startInLoadingState={true}
+                           scalesPageToFit={true}
+                       />
+                       :
+                       this.state.currentState == 2 ?
+                       <Echarts option={option} height = {530} width = {deviceHeight}/>
+                       :
+                        <Text>asdasdasd</Text>
+                   }
+
                </View>
                <View style={styles.rightContainer}>
                    <View style={{flex:0.1,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
@@ -282,7 +428,9 @@ class  HomeDrawerNavigatorView extends Component{
                             </View>
                         </View>
                         <View style={{flex:0.4,alignContent:'space-around'}}>
-                            <TouchableHighlight style={{alignItems:'center'}} onPress={() => Alert.alert('')}>
+                            <TouchableHighlight style={{alignItems:'center'}} onPress={() => this.setState({
+                                currentState:2,
+                            }) }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_CompactionValueNight}>
                                 </Image>
@@ -371,7 +519,7 @@ const styles = StyleSheet.create({
     },
     webView: {
         backgroundColor: 'rgba(255,255,255,0.8)',
-        flex:1
+        flex:1,
     },
 
 });
