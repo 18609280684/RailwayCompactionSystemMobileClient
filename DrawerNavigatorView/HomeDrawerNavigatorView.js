@@ -145,6 +145,7 @@ class  HomeDrawerNavigatorView extends Component{
         ServiceApi.request("Cache.get",{
             "key":"Sensor:GPS0:data"
         },($seq, $result, $info, $value) => {
+
             if(this.state.travelSpeed !=  $value.speed && this._isMounted)
             {
                 this.setState({
@@ -164,6 +165,14 @@ class  HomeDrawerNavigatorView extends Component{
                 });
             }
         },0);
+
+        ServiceApi.request("ProduceData.get_batches_list",{
+
+        },($seq, $result, $info, $value) => {
+            console.log('asdasdasdasdasds');
+            console.log($value);
+            console.log('asdasdasdasdasds');
+        },2000);
     }
 
 

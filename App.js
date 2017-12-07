@@ -103,9 +103,6 @@ const RootDrawerNavigator = DrawerNavigator({
     },
 
     contentComponent: props =>{
-        console.log('ooooooooooooooooooooooooooo');
-        //console.log(props.navigation.state.params);
-        console.log('lllllllllllllllllllllllllll');
         //console.log(props.navigation);
         return (
             <SideBarView Myprops = {props}/>
