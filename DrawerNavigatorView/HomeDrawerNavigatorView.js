@@ -29,7 +29,6 @@ import {
 } from '../Utils/ApiServer.js';
 import Echarts from 'native-echarts';
 
-var WEBVIEW_REF = 'webview';
 class  HomeDrawerNavigatorView extends Component{
     _isMounted = true;
 
@@ -69,6 +68,7 @@ class  HomeDrawerNavigatorView extends Component{
             signalIntensity:'',
             //当前页面状态
             currentState:1,
+            webViewData: '',
         };
       }
 
@@ -336,10 +336,11 @@ class  HomeDrawerNavigatorView extends Component{
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                 </View>
                <View style={styles.middleContainer}>
-                   {this.state.currentState == 1 ?
+
                        <WebView
+                           ref={'webview'}
                            style={{backgroundColor: 'rgba(255,255,255,0.8)',flex: 1}}
-                           source={{uri: 'http://192.168.0.63:8080/MyJSGame/index.html'}}
+                           source={{uri: 'http://192.168.0.139:8080/RailwayCompactionSystemMobileCocos2dJSWeb/index.html'}}
                            javaScriptEnabled={true}
                            domStorageEnabled={true}
                            decelerationRate="normal"
@@ -348,12 +349,7 @@ class  HomeDrawerNavigatorView extends Component{
                            startInLoadingState={true}
                            scalesPageToFit={true}
                        />
-                       :
-                       this.state.currentState == 2 ?
-                       <Echarts option={option} height = {530} width = {deviceHeight}/>
-                       :
-                        <Text>asdasdasd</Text>
-                   }
+
 
                </View>
                <View style={styles.rightContainer}>
@@ -376,100 +372,149 @@ class  HomeDrawerNavigatorView extends Component{
                    </View>
                    <View style={{flex:0.9,flexDirection:'row',alignItems:'center'}}>
                         <View style={{flex:0.3}}>
-                            <View style={{backgroundColor:'#fece22',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                            <View style={{backgroundColor:'#BA1126',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
                                     1-10
                                 </Text>
                             </View>
 
-                            <View style={{backgroundColor:'#fe7210',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                            <View style={{backgroundColor:'#D93329',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
                                     11-20
                                 </Text>
                             </View>
 
-                            <View style={{backgroundColor:'#da251c',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                            <View style={{backgroundColor:'#F77346',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
                                     21-30
                                 </Text>
                             </View>
 
-                            <View style={{backgroundColor:'#34a710',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                            <View style={{backgroundColor:'#FBB265',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
                                     31-40
                                 </Text>
                             </View>
 
-                            <View style={{backgroundColor:'#008212',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                            <View style={{backgroundColor:'#FFE495',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
                                     41-50
                                 </Text>
                             </View>
 
-                            <View style={{backgroundColor:'#085460',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                            <View style={{backgroundColor:'#D7EEF4',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
                                     51-60
                                 </Text>
                             </View>
 
-                            <View style={{backgroundColor:'#735998',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                            <View style={{backgroundColor:'#A2D2E6',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
                                     61-70
                                 </Text>
                             </View>
 
-                            <View style={{backgroundColor:'#343f84',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                            <View style={{backgroundColor:'#699FCB',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
                                     71-80
                                 </Text>
                             </View>
 
-                            <View style={{backgroundColor:'#142a74',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                            <View style={{backgroundColor:'#4269AE',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
                                     81-90
                                 </Text>
                             </View>
 
-                            <View style={{backgroundColor:'#09194e',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                            <View style={{backgroundColor:'#353991',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
                                     91-100
                                 </Text>
                             </View>
                         </View>
                         <View style={{flex:0.4,alignContent:'space-around'}}>
-                            <TouchableHighlight style={{alignItems:'center'}} onPress={() => this.setState({
-                                currentState:2,
-                            }) }>
+                            <TouchableHighlight style={{alignItems:'center'}} onPress={() => {
+                                this.setState({
+                                    currentState:1,
+                                   });
+
+                                ServiceApi.request("Cache.set", {
+                                   "key": "gameState",
+                                   "val":'1'
+                                    }, function($seq, $result, $info, $value) {
+                                },0);
+
+                                   this.sendMessage();
+                            } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_CompactionValueNight}>
                                 </Image>
                             </TouchableHighlight>
 
-                            <TouchableHighlight  style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => Alert.alert('')}>
+                            <TouchableHighlight  style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => {
+                                this.setState({
+                                    currentState:2,
+                                   });
+
+                                ServiceApi.request("Cache.set", {
+                                   "key": "gameState",
+                                   "val":'2'
+                                    }, function($seq, $result, $info, $value) {
+                                    },0);
+
+                                   this.sendMessage();
+                            } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_CompactedEdgeNumberNight}>
                                 </Image>
                             </TouchableHighlight>
 
-                            <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => Alert.alert('')}>
+                            <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => {
+                                this.setState({
+                                    currentState:3,
+                                   });
+
+                                ServiceApi.request("Cache.set", {
+                                   "key": "gameState",
+                                   "val":'3'
+                                    }, function($seq, $result, $info, $value) {
+                                },0);
+
+                                   this.sendMessage();
+                            } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_TrajectoryNight}>
                                 </Image>
                             </TouchableHighlight>
 
-                            <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => Alert.alert('')}>
+                            <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => {
+                                this.setState({
+                                    currentState:4,
+                                   });
+                                   this.sendMessage();
+                            } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_LocateCurrentNight}>
                                 </Image>
                             </TouchableHighlight>
 
-                            <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => Alert.alert('')}>
+                            <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => {
+                                this.setState({
+                                    currentState:5,
+                                   });
+                                   this.sendMessage();
+                            } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_NightMode}>
                                 </Image>
                             </TouchableHighlight>
 
-                            <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => Alert.alert('')}>
+                            <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => {
+                                this.setState({
+                                    currentState:6,
+                                   });
+                                   this.sendMessage();
+                            } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_RefreshNight}>
                                 </Image>
@@ -487,6 +532,18 @@ class  HomeDrawerNavigatorView extends Component{
                </View>
            </View>
         );
+    }
+
+    handleMessage(e){
+        const message = e.nativeEvent.data
+    }
+
+    sendMessage() {
+        console.log("bbbbbbbbbbbbbbbbb");
+        if (this.webview) {
+            console.log("mmmmmmmmmmmmmmmmmmmmmmm");
+            this.refs.webview.postMessage('sssssssssssssss');
+    }
     }
 }
 

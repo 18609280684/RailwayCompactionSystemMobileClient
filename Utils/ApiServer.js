@@ -8,7 +8,7 @@ var ServiceApi = {
 
     socketInit: function() {
         if (ServiceApi.socket != null) return;
-        var host = "192.168.0.25";
+        var host = "192.168.0.35";
         // window.location.host;
         ServiceApi.socket = new WebSocket("ws://" + host + ":1224");
         ServiceApi.socket.onopen = function() {
