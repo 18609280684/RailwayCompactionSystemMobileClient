@@ -1,6 +1,4 @@
-/**
- * Created by Administrator on 2017/10/25.
- */
+
 /**
  * Created by chenjianhui 2017/6/27.
  * 屏幕工具类
@@ -39,8 +37,12 @@ const scale = Math.min(deviceHeight / h2, deviceWidth / w2); //获取缩放比�
  * return number dp
  */
 export function setSpText(size: number) {
+    //IOS适配
     size = Math.round((size * scale + 0.5) * pixelRatio / fontScale);
+    //size = Math.round((size * scale) * pixelRatio / fontScale);
     return size / defaultPixel;
+    //android适配
+    //return size * (pixelRatio / fontScale);
 }
 
 export function scaleSize(size: number) {

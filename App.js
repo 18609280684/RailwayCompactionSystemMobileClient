@@ -123,7 +123,7 @@ class SideBarView extends Component{
 
     render(){
         console.log('nnnnnnnnnnnnnnnnnnnnnnnnnn');
-
+        const textSize = 16;
         return(
             <View style={{flex:1,backgroundColor:'#292929'}}>
                 <TouchableHighlight style={{flex:1/8}} onPress={() => this.props.Myprops.navigation.navigate('Daydata')} underlayColor = '#fece22'>
@@ -132,7 +132,7 @@ class SideBarView extends Component{
                            source={Banner_Imgs.DRAWVIEWPAGE_TodayData}
                            style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
                        />
-                       <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                       <Text style={{fontSize:setSpText(textSize),color:'#ffffff',marginLeft:scaleSize(10)}}>
                            当日数据
                        </Text>
                     </View>
@@ -146,7 +146,7 @@ class SideBarView extends Component{
                             source={Banner_Imgs.DRAWVIEWPAGE_DataDownloading}
                             style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
                         />
-                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                        <Text style={{fontSize:setSpText(textSize),color:'#ffffff',marginLeft:scaleSize(10)}}>
                             数据下载
                         </Text>
                     </View>
@@ -160,7 +160,7 @@ class SideBarView extends Component{
                             source={Banner_Imgs.DRAWVIEWPAGE_EquipmentDiagnosis}
                             style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
                         />
-                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                        <Text style={{fontSize:setSpText(textSize),color:'#ffffff',marginLeft:scaleSize(10)}}>
                             设备诊断
                         </Text>
                     </View>
@@ -174,7 +174,7 @@ class SideBarView extends Component{
                             source={Banner_Imgs.DRAWVIEWPAGE_SystemConfiguration}
                             style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
                         />
-                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                        <Text style={{fontSize:setSpText(textSize),color:'#ffffff',marginLeft:scaleSize(10)}}>
                             系统配置
                         </Text>
                     </View>
@@ -188,7 +188,7 @@ class SideBarView extends Component{
                             source={Banner_Imgs.DRAWVIEWPAGE_NetworkSettings}
                             style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
                         />
-                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                        <Text style={{fontSize:setSpText(textSize),color:'#ffffff',marginLeft:scaleSize(10)}}>
                             网络设置
                         </Text>
                     </View>
@@ -202,7 +202,7 @@ class SideBarView extends Component{
                             source={Banner_Imgs.DRAWVIEWPAGE_SatelliteState}
                             style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
                         />
-                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                        <Text style={{fontSize:setSpText(textSize),color:'#ffffff',marginLeft:scaleSize(10)}}>
                             卫星状态
                         </Text>
                     </View>
@@ -216,7 +216,7 @@ class SideBarView extends Component{
                             source={Banner_Imgs.DRAWVIEWPAGE_AlarmSetting}
                             style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
                         />
-                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                        <Text style={{fontSize:setSpText(textSize),color:'#ffffff',marginLeft:scaleSize(10)}}>
                             报警设置
                         </Text>
                     </View>
@@ -230,7 +230,7 @@ class SideBarView extends Component{
                             source={Banner_Imgs.DRAWVIEWPAGE_SystemUpgrade}
                             style={{width:scaleSize(64),height:scaleSize(64),marginLeft:scaleSize(60)}}
                         />
-                        <Text style={{fontSize:setSpText(26),color:'#ffffff',marginLeft:scaleSize(10)}}>
+                        <Text style={{fontSize:setSpText(textSize),color:'#ffffff',marginLeft:scaleSize(10)}}>
                             系统升级
                         </Text>
                     </View>

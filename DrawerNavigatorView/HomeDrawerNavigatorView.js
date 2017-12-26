@@ -84,7 +84,7 @@ class  HomeDrawerNavigatorView extends Component{
         this.timer && clearTimeout(this.timer);
         //侧边栏运行状态数据
         ServiceApi.request("Cache.get",{
-            "key":"Sensor:Dense:data"
+            "key":"showinfo"
 
         },($seq, $result, $info, $value) => {
             if(this.state.evc !=  $value.ecv && this._isMounted)
@@ -93,31 +93,37 @@ class  HomeDrawerNavigatorView extends Component{
                     evc:$value.ecv,
                 });
             }
-            if(this.state.rollingPasses !=  $value.ecv && this._isMounted)
+            if(this.state.rollingPasses !=  $value.times && this._isMounted)
             {
                 this.setState({
-                    rollingPasses:$value.ecv,
+                    rollingPasses:$value.times,
                 });
             }
 
-            if(this.state.frequency !=  $value.ecv && this._isMounted)
+            if(this.state.frequency !=  $value.hz && this._isMounted)
             {
                 this.setState({
-                    frequency:$value.freq,
+                    frequency:$value.hz,
                 });
             }
-            if(this.state.excitingForce !=  $value.ecv && this._isMounted)
+            if(this.state.excitingForce !=  $value.force && this._isMounted)
             {
                 this.setState({
                     excitingForce:$value.force,
                 });
             }
-            if(this.state.amplitude !=  $value.ecv && this._isMounted)
+            if(this.state.amplitude !=  $value.hi && this._isMounted)
             {
                 this.setState({
-                    amplitude:$value.amp,
+                    amplitude:$value.hi,
                 });
             }
+            if(this.state.travelSpeed !=  $value.speed && this._isMounted) {
+                this.setState({
+                    travelSpeed: $value.speed,
+                });
+            }
+
         },1000);
 
         //GPS0状态
@@ -142,17 +148,12 @@ class  HomeDrawerNavigatorView extends Component{
         },10000);
 
         //定位信息
-        ServiceApi.request("Cache.get",{
-            "key":"Sensor:GPS0:data"
-        },($seq, $result, $info, $value) => {
+        //ServiceApi.request("Cache.get",{
+        //    "key":"Sensor:GPS0:data"
+        //},($seq, $result, $info, $value) => {
+        //
+        //},1000);
 
-            if(this.state.travelSpeed !=  $value.speed && this._isMounted)
-            {
-                this.setState({
-                    travelSpeed:$value.speed,
-                });
-            }
-        },1000);
 
         ServiceApi.request("Cache.get",{
             "key":"sys:dialup"
@@ -189,6 +190,8 @@ class  HomeDrawerNavigatorView extends Component{
 
         const bianchang = 100;
         const buttonBianchang = 160;
+        const numberTextSize = 10;
+        const leftTextSize = 22;
         const {navigate} = this.props.navigation;
         var colors = ['#5793f3', '#d14a61', '#675bba'];
         const option = {
@@ -284,7 +287,7 @@ class  HomeDrawerNavigatorView extends Component{
                         <Text style={styles.leftSidleText}>
                             {this.state.evc}
                         </Text>
-                        <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
+                        <Text style={[styles.leftSidleText,{fontSize:setSpText(leftTextSize)}]}>
                             压实值
                         </Text>
                     </View>
@@ -293,7 +296,7 @@ class  HomeDrawerNavigatorView extends Component{
                         <Text style={styles.leftSidleText}>
                             {this.state.rollingPasses}
                         </Text>
-                        <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
+                        <Text style={[styles.leftSidleText,{fontSize:setSpText(leftTextSize)}]}>
                             碾压遍数
                         </Text>
                     </View>
@@ -302,7 +305,7 @@ class  HomeDrawerNavigatorView extends Component{
                         <Text style={styles.leftSidleText}>
                             {this.state.travelSpeed}Km/h
                         </Text>
-                        <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
+                        <Text style={[styles.leftSidleText,{fontSize:setSpText(leftTextSize)}]}>
                             行驶速度
                         </Text>
                     </View>
@@ -311,7 +314,7 @@ class  HomeDrawerNavigatorView extends Component{
                         <Text style={styles.leftSidleText}>
                             {this.state.frequency}Hz
                         </Text>
-                        <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
+                        <Text style={[styles.leftSidleText,{fontSize:setSpText(leftTextSize)}]}>
                             震动频率
                         </Text>
                     </View>
@@ -320,7 +323,7 @@ class  HomeDrawerNavigatorView extends Component{
                         <Text style={styles.leftSidleText}>
                             {this.state.excitingForce}Kn
                         </Text>
-                        <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
+                        <Text style={[styles.leftSidleText,{fontSize:setSpText(leftTextSize)}]}>
                             激振力
                         </Text>
                     </View>
@@ -329,8 +332,8 @@ class  HomeDrawerNavigatorView extends Component{
                         <Text style={styles.leftSidleText}>
                             {this.state.amplitude}mm
                         </Text>
-                        <Text style={[styles.leftSidleText,{fontSize:setSpText(22)}]}>
-                            振幅
+                        <Text style={[styles.leftSidleText,{fontSize:setSpText(leftTextSize)}]}>
+                            高程
                         </Text>
                     </View>
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
@@ -340,7 +343,7 @@ class  HomeDrawerNavigatorView extends Component{
                        <WebView
                            ref={'webview'}
                            style={{backgroundColor: 'rgba(255,255,255,0.8)',flex: 1}}
-                           source={{uri: 'http://192.168.0.139:8080/RailwayCompactionSystemMobileCocos2dJSWeb/index.html'}}
+                           source={{uri: 'http://192.168.0.35/html5/index.html'}}
                            javaScriptEnabled={true}
                            domStorageEnabled={true}
                            decelerationRate="normal"
@@ -373,61 +376,61 @@ class  HomeDrawerNavigatorView extends Component{
                    <View style={{flex:0.9,flexDirection:'row',alignItems:'center'}}>
                         <View style={{flex:0.3}}>
                             <View style={{backgroundColor:'#BA1126',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
                                     1-10
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#D93329',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
                                     11-20
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#F77346',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
                                     21-30
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#FBB265',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
                                     31-40
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#FFE495',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
                                     41-50
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#D7EEF4',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
                                     51-60
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#A2D2E6',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
                                     61-70
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#699FCB',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
                                     71-80
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#4269AE',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
                                     81-90
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#353991',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
                                     91-100
                                 </Text>
                             </View>
