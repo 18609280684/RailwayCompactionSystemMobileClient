@@ -11,7 +11,8 @@ import {
     TouchableHighlight,
     Alert,
     FlatList,
-    TextInput
+    TextInput,
+    StatusBar
 } from 'react-native';
 import {
     deviceWidth,
@@ -118,6 +119,9 @@ class DaydataView extends Component{
         const {navigate} = this.props.navigation;
         return(
             <View style={{flex:1}}>
+                <StatusBar
+                    hidden = {true}
+                />
                 <View style={{flex:0.1,backgroundColor:'rgb(255,255,255)',flexDirection:'row'}}>
                     <Image style={{width:deviceWidth,height:scaleSize(140),flexDirection:'row'}}  source={Banner_Imgs.DRAWVIEWPAGE_NavigationBg}>
                     <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
@@ -326,6 +330,9 @@ class DataDownloadingView extends Component{
         const {navigation} = this.props;
         return(
             <View style={{flex:1,}}>
+                <StatusBar
+                    hidden = {true}
+                />
                 <View style={{flex:0.11,flexDirection:'row',backgroundColor:'rgb(255,255,255)'}}>
                     <Image style={{width:deviceWidth,height:scaleSize(140),flexDirection:'row'}}  source={Banner_Imgs.DRAWVIEWPAGE_NavigationBg}>
                     <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
@@ -522,6 +529,9 @@ class EquipmentDiagnosisView extends Component{
         const {navigation} = this.props;
         return(
             <View style={{flex:1,}}>
+                <StatusBar
+                    hidden = {true}
+                />
                 <View style={{flex:0.11,flexDirection:'row',backgroundColor:'rgb(255,255,255)'}}>
                     <Image style={{width:deviceWidth,height:scaleSize(140),flexDirection:'row'}}  source={Banner_Imgs.DRAWVIEWPAGE_NavigationBg}>
                     <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
@@ -679,6 +689,9 @@ class SystemConfigurationView extends Component{
         const {navigate} = this.props.navigation;
         return(
             <View style={{flex:1}}>
+                <StatusBar
+                    hidden = {true}
+                />
                 <View style={{flex:0.1,backgroundColor:'rgb(255,255,255)',flexDirection:'row'}}>
                     <Image style={{width:deviceWidth,height:scaleSize(140),flexDirection:'row'}}  source={Banner_Imgs.DRAWVIEWPAGE_NavigationBg}>
                     <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
@@ -853,6 +866,9 @@ class NetworkSettingsView extends Component{
         const {navigate} = this.props.navigation;
         return(
             <View style={{flex:1}}>
+                <StatusBar
+                    hidden = {true}
+                />
                 <View style={{flex:0.1,backgroundColor:'rgb(255,255,255)',flexDirection:'row'}}>
                     <Image style={{width:deviceWidth,height:scaleSize(140),flexDirection:'row'}}  source={Banner_Imgs.DRAWVIEWPAGE_NavigationBg}>
                     <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
@@ -984,6 +1000,9 @@ class SatelliteStateView extends Component{
         const {navigate} = this.props.navigation;
         return(
             <View style={{flex:1}}>
+                <StatusBar
+                    hidden = {true}
+                />
                 <View style={{flex:0.1,backgroundColor:'rgb(255,255,255)',flexDirection:'row'}}>
                     <Image style={{width:deviceWidth,height:scaleSize(140),flexDirection:'row'}}  source={Banner_Imgs.DRAWVIEWPAGE_NavigationBg}>
                     <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
@@ -1116,6 +1135,9 @@ class AlarmSettingView extends Component{
         const {navigation} = this.props;
         return(
             <View style={{flex:1,backgroundColor:'#eeeeee'}}>
+                <StatusBar
+                    hidden = {true}
+                />
                 <View style={{flex:0.11,flexDirection:'row',backgroundColor:'rgb(255,255,255)'}}>
                     <Image style={{width:deviceWidth,height:scaleSize(140),flexDirection:'row'}}  source={Banner_Imgs.DRAWVIEWPAGE_NavigationBg}>
                     <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>
@@ -1339,6 +1361,9 @@ class SystemUpgradeView extends Component{
         const {navigation} = this.props;
         return(
             <View style={{flex:1,}}>
+                <StatusBar
+                    hidden = {true}
+                />
                 <View style={{flex:0.11,flexDirection:'row',backgroundColor:'rgb(255,255,255)'}}>
                     <Image style={{width:deviceWidth,height:scaleSize(140),flexDirection:'row'}}  source={Banner_Imgs.DRAWVIEWPAGE_NavigationBg}>
                     <View style={{flex:0.18,alignItems:'center',justifyContent:'center'}}>

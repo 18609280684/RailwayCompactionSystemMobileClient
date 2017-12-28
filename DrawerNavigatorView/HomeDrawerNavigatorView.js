@@ -10,7 +10,8 @@ import {
     Image,
     TouchableHighlight,
     Alert,
-    WebView
+    WebView,
+    StatusBar
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {
@@ -61,13 +62,16 @@ class  HomeDrawerNavigatorView extends Component{
             //振幅
             amplitude:0.3,
             //GPS1状态
-            gpsStateOne:'',
+            gpsStateOne:true,
             //GPS2状态
-            gpsStateTwo:'',
+            gpsStateTwo:true,
+            //压实传感器
+            CompactingSensor:true,
             //信号强度
             signalIntensity:'',
             //当前页面状态
             currentState:1,
+
             webViewData: '',
         };
       }
@@ -282,6 +286,10 @@ class  HomeDrawerNavigatorView extends Component{
         };
         return(
            <View style={styles.container}>
+
+               <StatusBar
+                   hidden = {true}
+               />
                 <View style={styles.leftContainer}>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
@@ -330,7 +338,7 @@ class  HomeDrawerNavigatorView extends Component{
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                     <View style={styles.leftSidleLattice}>
                         <Text style={styles.leftSidleText}>
-                            {this.state.amplitude}mm
+                            {this.state.amplitude}m
                         </Text>
                         <Text style={[styles.leftSidleText,{fontSize:setSpText(leftTextSize)}]}>
                             高程
@@ -357,81 +365,82 @@ class  HomeDrawerNavigatorView extends Component{
                </View>
                <View style={styles.rightContainer}>
                    <View style={{flex:0.1,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
-                        <Image style={styles.rightStateIcon}
+                        <Image style={[styles.rightStateIcon,{opacity:this.state.gpsStateOne?1:0.3}]}
                                source = {Banner_Imgs.HOMEPAGE_SatelliteStateOne}>
                         </Image>
 
-                       <Image style={styles.rightStateIcon}
+                       <Image style={[styles.rightStateIcon,{opacity:this.state.gpsStateTwo?1:0.3}]}
                               source = {Banner_Imgs.HOMEPAGE_SatelliteStateTwo}>
                        </Image>
 
-                       <Image style={styles.rightStateIcon}
+                       <Image style={[styles.rightStateIcon,{opacity:this.state.CompactingSensor?1:0.3}]}
                               source = {Banner_Imgs.HOMEPAGE_CompactionSensorState}>
                        </Image>
 
                        <Image style={styles.rightStateIcon}
-                              source = {Banner_Imgs.HOMEPAGE_G4State}>
+                              source = {this.state.signalIntensity == 1?Banner_Imgs.HOMEPAGE_G4State:this.state.signalIntensity == 2?Banner_Imgs.HOMEPAGE_G4State:
+                       this.state.signalIntensity == 3?Banner_Imgs.HOMEPAGE_G4State:this.state.signalIntensity == 4?Banner_Imgs.HOMEPAGE_G4State:this.state.signalIntensity == 5?Banner_Imgs.HOMEPAGE_G4State:Banner_Imgs.HOMEPAGE_G4State}>
                        </Image>
                    </View>
                    <View style={{flex:0.9,flexDirection:'row',alignItems:'center'}}>
                         <View style={{flex:0.3}}>
                             <View style={{backgroundColor:'#BA1126',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    1-10
+                                    {this.state.currentState == 1?'1-10':'1-2'}
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#D93329',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    11-20
+                                    {this.state.currentState == 1?'11-20':'3-4'}
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#F77346',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    21-30
+                                    {this.state.currentState == 1?'21-30':'5-6'}
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#FBB265',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    31-40
+                                    {this.state.currentState == 1?'31-40':'7-8'}
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#FFE495',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    41-50
+                                    {this.state.currentState == 1?'41-50':'9-10'}
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#D7EEF4',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    51-60
+                                    {this.state.currentState == 1?'51-60':'11-12'}
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#A2D2E6',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    61-70
+                                    {this.state.currentState == 1?'61-70':'13-14'}
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#699FCB',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    71-80
+                                    {this.state.currentState == 1?'71-80':'15-16'}
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#4269AE',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    81-90
+                                    {this.state.currentState == 1?'81-90':'17-18'}
                                 </Text>
                             </View>
 
                             <View style={{backgroundColor:'#353991',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    91-100
+                                    {this.state.currentState == 1?'91-100':'19-20'}
                                 </Text>
                             </View>
                         </View>
