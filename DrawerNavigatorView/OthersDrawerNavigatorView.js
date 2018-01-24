@@ -12,7 +12,8 @@ import {
     Alert,
     FlatList,
     TextInput,
-    StatusBar
+    StatusBar,
+    WebView
 } from 'react-native';
 import {
     deviceWidth,
@@ -46,8 +47,12 @@ import {
 } from '../Utils/Constants.js';
 import Echarts from 'native-echarts';
 import ModalDropdown from 'react-native-modal-dropdown';
+import createInvoke from 'react-native-webview-invoke/native';
 
 class DaydataView extends Component{
+
+    webview: WebView;
+    invoke = createInvoke(() => this.webview);
     static navigationOptions = ({navigation}) => ({
         drawerLabel:'当日数据',
         drawerIcon:({ tintColor }) => (
@@ -61,16 +66,27 @@ class DaydataView extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            yashichengdu:true,
-            yashizhuangtai:false,
-            junyundu:false,
+            //yashichengdu:true,
+            //yashizhuangtai:false,
+            //junyundu:false,
+            currentState:1,
             canada: '',
         };
     }
 
+    onShouldStartLoadWithRequest = (event) => {
+        // Implement any custom loading logic here, don't forget to return!
+        return true;
+    };
+
     render(){
         const bianchang = 100;
-
+        var setScenes = this.invoke.bind('setScene');
+        //setScenes(2)
+        //.then((data) =>{
+        //    console.log("ooooooooooooooooooo");
+        //        console.log(data);
+        //});
         const option = {
             color: ['#3398DB'],
             title: {
@@ -172,44 +188,54 @@ class DaydataView extends Component{
                 <View style={{flex:0.9,backgroundColor:'rgb(0,0,0)',flexDirection:'row'}}>
                     <View style={{flex:0.18,backgroundColor:'#292929'}}>
 
-                        <View style={{flex:(10/3),backgroundColor:(this.state.yashichengdu ? '#fece22' : '#292929'),}}>
+                        <View style={{flex:(10/3),backgroundColor:(this.state.currentState == 1 ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+                            console.log("this.state.currentState:" + this.state.currentState);
                                 this.setState({
-                                        yashichengdu:true,
-                                        yashizhuangtai:false,
-                                        junyundu:false,
+                                        currentState:1,
+                                });
+
+                                setScenes(1)
+                                .then(function(data){
+                                    console.log(data);
                                 });
                             }}
                                                 underlayColor = '#fece22'>
-                                <Text style={{fontSize:setSpText(26),color:(this.state.yashichengdu ? '#222222' : '#ffffff')}}>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.currentState == 1? '#222222' : '#ffffff')}}>
                                     压实程度
                                 </Text>
                             </TouchableHighlight>
                         </View>
                         <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
-                        <View style={{flex:(10/3),backgroundColor:(this.state.yashizhuangtai ? '#fece22' : '#292929'),}}>
+                        <View style={{flex:(10/3),backgroundColor:(this.state.currentState == 2 ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
                                 this.setState({
-                                        yashichengdu:false,
-                                        yashizhuangtai:true,
-                                        junyundu:false,
+                                        currentState:2,
                                 });
-                            }}>
-                                <Text style={{fontSize:setSpText(26),color:(this.state.yashizhuangtai ? '#222222' : '#ffffff')}}>
+                                console.log("this.state.currentState:" + this.state.currentState);
+                                setScenes(2)
+                                .then(function(data){
+                                    console.log(data);
+                                });
+                            }} underlayColor = '#fece22'>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.currentState == 2 ? '#222222' : '#ffffff')}}>
                                     压实状态
                                 </Text>
                             </TouchableHighlight>
                         </View>
                         <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
-                        <View style={{flex:(10/3),backgroundColor:(this.state.junyundu ? '#fece22' : '#292929'),}}>
+                        <View style={{flex:(10/3),backgroundColor:(this.state.currentState == 3 ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
                                 this.setState({
-                                        yashichengdu:false,
-                                        yashizhuangtai:false,
-                                        junyundu:true,
+                                        currentState:3,
                                 });
-                            }}>
-                                <Text style={{fontSize:setSpText(26),color:(this.state.junyundu ? '#222222' : '#ffffff')}}>
+                                console.log("this.state.currentState:" + this.state.currentState);
+                                setScenes(3)
+                                .then(function(data){
+                                    console.log(data);
+                                });
+                            }} underlayColor = '#fece22'>
+                                <Text style={{fontSize:setSpText(26),color:(this.state.currentState == 3 ? '#222222' : '#ffffff')}}>
                                     均匀度
                                 </Text>
                             </TouchableHighlight>
@@ -218,73 +244,149 @@ class DaydataView extends Component{
                     </View>
                     <View style={{flex:0.82,backgroundColor:'rgb(0,255,0)'}}>
                         <View style={{flex:0.2,backgroundColor:'#eeeeee',flexDirection:'row'}}>
-                            <View style={{flex:0.7,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                                <View style={{backgroundColor:'#fece22',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
-                                        1-10
-                                    </Text>
+                            {this.state.currentState == 1?
+                                <View
+                                    style={{flex:0.7,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <View
+                                        style={{backgroundColor:'#fece22',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            1-10
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{backgroundColor:'#fe7210',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            11-20
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{backgroundColor:'#da251c',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            21-30
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{backgroundColor:'#34a710',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            31-40
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{backgroundColor:'#008212',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            41-50
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{backgroundColor:'#085460',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            51-60
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{backgroundColor:'#735998',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            61-70
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{backgroundColor:'#343f84',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            71-80
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{backgroundColor:'#142a74',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            81-90
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{backgroundColor:'#09194e',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            91-100
+                                        </Text>
+                                    </View>
+                                </View>
+                                :this.state.currentState == 2
+                                ?<View  style={{flex:0.7,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <View style={{backgroundColor:'#ff0000',height:scaleSize(100),width:scaleSize(200),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            不合格
+                                        </Text>
+                                    </View>
+                                     <View style={{backgroundColor:'#ff0000',height:scaleSize(100),width:scaleSize(200),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            35%
+                                         </Text>
+                                    </View>
+                                    <View style={{backgroundColor:'#00ff00',height:scaleSize(100),width:scaleSize(200),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            合格
+                                        </Text>
+                                    </View>
+                                    <View style={{backgroundColor:'#00ff00',height:scaleSize(100),width:scaleSize(200),justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
+                                            65%
+                                        </Text>
+                                     </View>
                                 </View>
 
-                                <View style={{backgroundColor:'#fe7210',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                :<View  style={{flex:0.7,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                <View style={{backgroundColor:'#ff0000',height:scaleSize(100),width:scaleSize(200),justifyContent:'center',alignItems:'center'}}>
                                     <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
-                                        11-20
+                                        >0.8VCV
                                     </Text>
                                 </View>
-
-                                <View style={{backgroundColor:'#da251c',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                <View style={{backgroundColor:'#ff0000',height:scaleSize(100),width:scaleSize(200),justifyContent:'center',alignItems:'center'}}>
                                     <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
-                                        21-30
+                                        40%
                                     </Text>
                                 </View>
-
-                                <View style={{backgroundColor:'#34a710',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                <View style={{backgroundColor:'#00ff00',height:scaleSize(100),width:scaleSize(200),justifyContent:'center',alignItems:'center'}}>
                                     <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
-                                        31-40
+                                       《= 0.8VCV
                                     </Text>
                                 </View>
-
-                                <View style={{backgroundColor:'#008212',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
+                                <View style={{backgroundColor:'#00ff00',height:scaleSize(100),width:scaleSize(200),justifyContent:'center',alignItems:'center'}}>
                                     <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
-                                        41-50
-                                    </Text>
-                                </View>
-
-                                <View style={{backgroundColor:'#085460',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
-                                        51-60
-                                    </Text>
-                                </View>
-
-                                <View style={{backgroundColor:'#735998',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
-                                        61-70
-                                    </Text>
-                                </View>
-
-                                <View style={{backgroundColor:'#343f84',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
-                                        71-80
-                                    </Text>
-                                </View>
-
-                                <View style={{backgroundColor:'#142a74',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
-                                        81-90
-                                    </Text>
-                                </View>
-
-                                <View style={{backgroundColor:'#09194e',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
-                                    <Text style={{fontSize:setSpText(16),color:'rgb(255,255,255)'}}>
-                                        91-100
+                                        60%
                                     </Text>
                                 </View>
                             </View>
-                            <View style={{flex:0.3,backgroundColor:'rgb(0,0,0)'}}>
+                            }
+                            <View style={{flex:0.3,}}>
                                 <Echarts option={option} height={150} width = {200} />
                             </View>
                         </View>
                         <View style={{flex:0.8,backgroundColor:'rgb(255,255,0)'}}>
-                            <Echarts option={option} height={150} width = {300} />
+                            <WebView
+                                ref={webview => this.webview = webview}
+                                onMessage={this.invoke.listener}
+                                style={{backgroundColor: 'rgba(255,255,255,0.8)',flex: 1}}
+                                source={{uri: 'http://192.168.0.64:8080/RailwayCompactionSystemMobileCocos2dJSWeb/index.html'}}
+                                javaScriptEnabled={true}
+                                domStorageEnabled={true}
+                                decelerationRate="normal"
+                                automaticallyAdjustContentInsets={false}
+                                onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+                                startInLoadingState={true}
+                                scalesPageToFit={true}
+                                injectedJavaScript = "
+                                    var ele = document.getElementById('gameCanvas');
+                                    ele.width = 800;
+                                    ele.height = 380;
+                                    "
+                            />
                         </View>
                     </View>
                 </View>

@@ -29,10 +29,14 @@ import {
     ServiceApi
 } from '../Utils/ApiServer.js';
 import Echarts from 'native-echarts';
+import Orientation from 'react-native-orientation';
+import createInvoke from 'react-native-webview-invoke/native';
 
 class  HomeDrawerNavigatorView extends Component{
     _isMounted = true;
 
+    webview: WebView;
+    invoke = createInvoke(() => this.webview);
     static navigationOptions = ({navigation}) => ({
         drawerLabel:'首页显示',
         drawerIcon:({ tintColor }) => (
@@ -74,6 +78,7 @@ class  HomeDrawerNavigatorView extends Component{
 
             webViewData: '',
         };
+          Orientation.lockToLandscape();
       }
 
 
@@ -84,6 +89,16 @@ class  HomeDrawerNavigatorView extends Component{
     }
 
     componentWillMount() {
+
+        const initial = Orientation.getInitialOrientation();
+        if (initial === 'PORTRAIT') {
+            // do something
+            console.log( 'PORTRAIT');
+        } else {
+            // do something else
+            console.log( 'OthersPORTRAIT');
+        }
+
         this._isMounted = true;
         this.timer && clearTimeout(this.timer);
         //侧边栏运行状态数据
@@ -191,12 +206,14 @@ class  HomeDrawerNavigatorView extends Component{
     }
 
     render(){
-
+        //source={{uri: 'http://192.168.0.35/html5/index.html'}}
         const bianchang = 100;
         const buttonBianchang = 160;
         const numberTextSize = 10;
         const leftTextSize = 22;
         const {navigate} = this.props.navigation;
+        var webWannaGet = this.invoke.bind('webGet');
+        var webWannaSet = this.invoke.bind('webSet');
         var colors = ['#5793f3', '#d14a61', '#675bba'];
         const option = {
             tooltip: {
@@ -275,13 +292,9 @@ class  HomeDrawerNavigatorView extends Component{
                             {type : 'max', name: '最大值', itemStyle:{normal:{color:'#dc143c'}}},
                             {type : 'min', name: '最小值', itemStyle:{normal:{color:'#dc143c'}}},
                             {type : 'average', name : '平均值', itemStyle:{normal:{color:'#dc143c'}}},
-
                         ]
                     }
-
                 },
-
-
             ]
         };
         return(
@@ -347,11 +360,11 @@ class  HomeDrawerNavigatorView extends Component{
                     <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                 </View>
                <View style={styles.middleContainer}>
-
                        <WebView
-                           ref={'webview'}
+                           ref={webview => this.webview = webview}
+                           onMessage={this.invoke.listener}
                            style={{backgroundColor: 'rgba(255,255,255,0.8)',flex: 1}}
-                           source={{uri: 'http://192.168.0.35/html5/index.html'}}
+                           source={{uri: 'http://192.168.0.64:8080/RailwayCompactionSystemMobileCocos2dJSWeb/index.html'}}
                            javaScriptEnabled={true}
                            domStorageEnabled={true}
                            decelerationRate="normal"
@@ -359,9 +372,8 @@ class  HomeDrawerNavigatorView extends Component{
                            onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
                            startInLoadingState={true}
                            scalesPageToFit={true}
+                           scrollEnabled = {false}
                        />
-
-
                </View>
                <View style={styles.rightContainer}>
                    <View style={{flex:0.1,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
@@ -440,7 +452,7 @@ class  HomeDrawerNavigatorView extends Component{
 
                             <View style={{backgroundColor:'#353991',height:scaleSize(bianchang),width:scaleSize(bianchang),justifyContent:'center',alignItems:'center'}}>
                                 <Text style={{fontSize:setSpText(numberTextSize),color:'rgb(255,255,255)'}}>
-                                    {this.state.currentState == 1?'91-100':'19-20'}
+                                    {this.state.currentState == 1?'91-100':'>=19'}
                                 </Text>
                             </View>
                         </View>
@@ -449,14 +461,10 @@ class  HomeDrawerNavigatorView extends Component{
                                 this.setState({
                                     currentState:1,
                                    });
-
-                                ServiceApi.request("Cache.set", {
-                                   "key": "gameState",
-                                   "val":'1'
-                                    }, function($seq, $result, $info, $value) {
-                                },0);
-
-                                   this.sendMessage();
+                                webWannaSet(1)
+                                     .then(function (data) {
+                                        console.log(data);
+                                    });
                             } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_CompactionValueNight}>
@@ -467,14 +475,10 @@ class  HomeDrawerNavigatorView extends Component{
                                 this.setState({
                                     currentState:2,
                                    });
-
-                                ServiceApi.request("Cache.set", {
-                                   "key": "gameState",
-                                   "val":'2'
-                                    }, function($seq, $result, $info, $value) {
-                                    },0);
-
-                                   this.sendMessage();
+                                 webWannaSet(2)
+                                     .then(function (data) {
+                                        console.log(data);
+                                    });
                             } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_CompactedEdgeNumberNight}>
@@ -485,14 +489,10 @@ class  HomeDrawerNavigatorView extends Component{
                                 this.setState({
                                     currentState:3,
                                    });
-
-                                ServiceApi.request("Cache.set", {
-                                   "key": "gameState",
-                                   "val":'3'
-                                    }, function($seq, $result, $info, $value) {
-                                },0);
-
-                                   this.sendMessage();
+                               webWannaSet(3)
+                                     .then(function (data) {
+                                        console.log(data);
+                                    });
                             } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_TrajectoryNight}>
@@ -500,10 +500,10 @@ class  HomeDrawerNavigatorView extends Component{
                             </TouchableHighlight>
 
                             <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => {
-                                this.setState({
-                                    currentState:4,
-                                   });
-                                   this.sendMessage();
+                               webWannaGet(1)
+                               .then(function(data) {
+                                    console.log('data set success!');
+                               });
                             } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_LocateCurrentNight}>
@@ -511,10 +511,10 @@ class  HomeDrawerNavigatorView extends Component{
                             </TouchableHighlight>
 
                             <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => {
-                                this.setState({
-                                    currentState:5,
-                                   });
-                                   this.sendMessage();
+                                webWannaGet(2)
+                               .then(function(data) {
+                                    console.log('data set success!');
+                               });
                             } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_NightMode}>
@@ -522,10 +522,10 @@ class  HomeDrawerNavigatorView extends Component{
                             </TouchableHighlight>
 
                             <TouchableHighlight style={{alignItems:'center',marginTop:scaleSize(20)}} onPress={() => {
-                                this.setState({
-                                    currentState:6,
-                                   });
-                                   this.sendMessage();
+                                webWannaGet(3)
+                               .then(function(data) {
+                                    console.log('data set success!');
+                               });
                             } }>
                                 <Image style={{height:scaleSize(buttonBianchang),width:scaleSize(buttonBianchang),}}
                                        source={Banner_Imgs.HOMEPAGEBUTTON_RefreshNight}>
@@ -546,17 +546,6 @@ class  HomeDrawerNavigatorView extends Component{
         );
     }
 
-    handleMessage(e){
-        const message = e.nativeEvent.data
-    }
-
-    sendMessage() {
-        console.log("bbbbbbbbbbbbbbbbb");
-        if (this.webview) {
-            console.log("mmmmmmmmmmmmmmmmmmmmmmm");
-            this.refs.webview.postMessage('sssssssssssssss');
-    }
-    }
 }
 
 const styles = StyleSheet.create({
