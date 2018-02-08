@@ -103,7 +103,7 @@ class  HomeDrawerNavigatorView extends Component{
         this.timer && clearTimeout(this.timer);
         //侧边栏运行状态数据
         ServiceApi.request("Cache.get",{
-            "key":"showinfo"
+            "key":"roller:showinfo"
 
         },($seq, $result, $info, $value) => {
             if(this.state.evc !=  $value.ecv && this._isMounted)
@@ -189,9 +189,9 @@ class  HomeDrawerNavigatorView extends Component{
         ServiceApi.request("ProduceData.get_batches_list",{
 
         },($seq, $result, $info, $value) => {
-            console.log('asdasdasdasdasds');
-            console.log($value);
-            console.log('asdasdasdasdasds');
+            //console.log('asdasdasdasdasds');
+            //console.log($value);
+            //console.log('asdasdasdasdasds');
         },2000);
     }
 

@@ -81,12 +81,7 @@ class DaydataView extends Component{
 
     render(){
         const bianchang = 100;
-        var setScenes = this.invoke.bind('setScene');
-        //setScenes(2)
-        //.then((data) =>{
-        //    console.log("ooooooooooooooooooo");
-        //        console.log(data);
-        //});
+        var setScene = this.invoke.bind('setSceneState');
         const option = {
             color: ['#3398DB'],
             title: {
@@ -190,13 +185,12 @@ class DaydataView extends Component{
 
                         <View style={{flex:(10/3),backgroundColor:(this.state.currentState == 1 ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
-                            console.log("this.state.currentState:" + this.state.currentState);
                                 this.setState({
                                         currentState:1,
                                 });
-
-                                setScenes(1)
+                                setScene('1')
                                 .then(function(data){
+                                 console.log("this.state.currentState:");
                                     console.log(data);
                                 });
                             }}
@@ -209,12 +203,13 @@ class DaydataView extends Component{
                         <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                         <View style={{flex:(10/3),backgroundColor:(this.state.currentState == 2 ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+
                                 this.setState({
                                         currentState:2,
                                 });
-                                console.log("this.state.currentState:" + this.state.currentState);
-                                setScenes(2)
+                                setScene('2')
                                 .then(function(data){
+                                 console.log("this.state.currentState:");
                                     console.log(data);
                                 });
                             }} underlayColor = '#fece22'>
@@ -226,14 +221,17 @@ class DaydataView extends Component{
                         <Image style={{height:scaleSize(4),}} source={Banner_Imgs.HOMEPAGECELL_Cell}/>
                         <View style={{flex:(10/3),backgroundColor:(this.state.currentState == 3 ? '#fece22' : '#292929'),}}>
                             <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress={() => {
+
                                 this.setState({
                                         currentState:3,
                                 });
-                                console.log("this.state.currentState:" + this.state.currentState);
-                                setScenes(3)
+                                setScene('3')
                                 .then(function(data){
+                                 //console.log("this.state.currentState:" + this.state.currentState);
+                                 console.log("this.state.currentState:");
                                     console.log(data);
                                 });
+
                             }} underlayColor = '#fece22'>
                                 <Text style={{fontSize:setSpText(26),color:(this.state.currentState == 3 ? '#222222' : '#ffffff')}}>
                                     均匀度
