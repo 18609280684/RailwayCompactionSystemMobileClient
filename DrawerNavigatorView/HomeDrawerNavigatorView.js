@@ -32,6 +32,8 @@ import Echarts from 'native-echarts';
 import Orientation from 'react-native-orientation';
 import createInvoke from 'react-native-webview-invoke/native';
 
+
+
 class  HomeDrawerNavigatorView extends Component{
     _isMounted = true;
 
