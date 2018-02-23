@@ -366,7 +366,7 @@ class  HomeDrawerNavigatorView extends Component{
                            ref={webview => this.webview = webview}
                            onMessage={this.invoke.listener}
                            style={{backgroundColor: 'rgba(255,255,255,0.8)',flex: 1}}
-                           source={{uri: 'http://192.168.0.64:8080/RailwayCompactionSystemMobileCocos2dJSWeb/index.html'}}
+                           source={{uri: 'http://192.168.0.35/html5/index.html'}}
                            javaScriptEnabled={true}
                            domStorageEnabled={true}
                            decelerationRate="normal"
