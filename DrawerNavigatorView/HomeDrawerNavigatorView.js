@@ -31,6 +31,8 @@ import {
 import Echarts from 'native-echarts';
 import Orientation from 'react-native-orientation';
 import createInvoke from 'react-native-webview-invoke/native';
+import DeviceInfo from 'react-native-device-info';
+import md5 from 'js-md5';
 
 
 
@@ -52,7 +54,7 @@ class  HomeDrawerNavigatorView extends Component{
     // 构造
       constructor(props) {
         super(props);
-
+          var getToken = this.invoke.bind('getToken');
         // 初始状态
         this.state = {
             //压实值
@@ -81,13 +83,53 @@ class  HomeDrawerNavigatorView extends Component{
             webViewData: '',
         };
           Orientation.lockToLandscape();
+
+          var uidMd5 = md5(md5('pad' +  DeviceInfo.getUniqueID()).substr(5,13) + 'enH');
+          console.log("bbbbbbbbbbbbbbbbbb");
+          console.log(uidMd5);
+
+          var formdata = new FormData();
+          formdata.append("did",'pad' + DeviceInfo.getUniqueID());
+          formdata.append('key',uidMd5);
+          fetch("http://192.168.0.35/sys..get_token",{
+              method:"POST",
+              header:{
+                  //'Accept':'application/json',
+                  'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body:formdata
+                  //new FormData('did=pad' + DeviceInfo.getUniqueID() +  '&key=' + uidMd5);
+          })
+              .then((response) => {
+                  console.log(response);
+                  var xx = JSON.parse(response._bodyText);
+                  if (xx.status == 1)
+                  {
+                      console.log(xx.token);
+                      getToken(xx.token);
+                      this.initData(xx.token);
+                  }else{
+                      console.log("Token获取失败！");
+                  }
+
+                  //response.json()
+              })
+              //.then((response) => {
+              //    console.log("333333333333333333333");
+              //    console.log(response._bodyText);
+              //    //console.log(responseJson.result);
+              //    //console.log(responseJson.info);
+              //})
+              .catch((e) => {
+                  console.log("22222222222222222222");
+                  console.log(e);
+              });
       }
 
 
 
     componentDidMount() {
         this.timer = setTimeout(() => SplashScreen.hide(), 2000);
-
     }
 
     componentWillMount() {
@@ -95,117 +137,126 @@ class  HomeDrawerNavigatorView extends Component{
         const initial = Orientation.getInitialOrientation();
         if (initial === 'PORTRAIT') {
             // do something
-            console.log( 'PORTRAIT');
+            console.log('PORTRAIT');
         } else {
             // do something else
-            console.log( 'OthersPORTRAIT');
+            console.log('OthersPORTRAIT');
         }
 
         this._isMounted = true;
         this.timer && clearTimeout(this.timer);
-        //侧边栏运行状态数据
-        ServiceApi.request("Cache.get",{
-            "key":"roller:showinfo"
-
-        },($seq, $result, $info, $value) => {
-            if(this.state.evc !=  $value.ecv && this._isMounted)
-            {
-                this.setState({
-                    evc:$value.ecv,
-                });
-            }
-            if(this.state.rollingPasses !=  $value.times && this._isMounted)
-            {
-                this.setState({
-                    rollingPasses:$value.times,
-                });
-            }
-
-            if(this.state.frequency !=  $value.hz && this._isMounted)
-            {
-                this.setState({
-                    frequency:$value.hz,
-                });
-            }
-            if(this.state.excitingForce !=  $value.force && this._isMounted)
-            {
-                this.setState({
-                    excitingForce:$value.force,
-                });
-            }
-            if(this.state.amplitude !=  $value.hi && this._isMounted)
-            {
-                this.setState({
-                    amplitude:$value.hi,
-                });
-            }
-            if(this.state.travelSpeed !=  $value.speed && this._isMounted) {
-                this.setState({
-                    travelSpeed: $value.speed,
-                });
-            }
-
-        },1000);
-
-        //GPS0状态
-        ServiceApi.request("Cache.get",{
-            "key":"Sensor:GPS0:status"
-        },($seq, $result, $info, $value) => {
-            if(this._isMounted) {
-                this.setState({
-                    gpsStateOne: $value,
-                });
-            }
-        },10000);
-        //GPS1状态
-        ServiceApi.request("Cache.get",{
-            "key":"Sensor:GPS1:status"
-        },($seq, $result, $info, $value) => {
-            if(this._isMounted) {
-            this.setState({
-                gpsStateTwo:$value,
-            });
-            }
-        },10000);
-
-        //定位信息
-        //ServiceApi.request("Cache.get",{
-        //    "key":"Sensor:GPS0:data"
-        //},($seq, $result, $info, $value) => {
-        //
-        //},1000);
-
-
-        ServiceApi.request("Cache.get",{
-            "key":"sys:dialup"
-        },($seq, $result, $info, $value) => {
-            console.log("$value.status.signal_quality:" + $value.status.signal_quality);
-            if(this.state.signalIntensity !=  $value.status.signal_quality && this._isMounted)
-            {
-                this.setState({
-                    signalIntensity:$value.status.signal_quality,
-                });
-            }
-        },0);
-
-        ServiceApi.request("ProduceData.get_batches_list",{
-
-        },($seq, $result, $info, $value) => {
-            //console.log('asdasdasdasdasds');
-            //console.log($value);
-            //console.log('asdasdasdasdasds');
-        },2000);
     }
-
 
     onShouldStartLoadWithRequest = (event) => {
         // Implement any custom loading logic here, don't forget to return!
         return true;
     };
 
-    componentWillUnmount() {
+    componentWillUnmount()
+    {
         this._isMounted = false;
     }
+
+    initData(token)
+        {
+            //侧边栏运行状态数据
+            ServiceApi.request("Cache.get",{
+                "key":"roller:showinfo",
+                "token":token
+
+            },($seq, $result, $info, $value) => {
+                if(this.state.evc !=  $value.ecv && this._isMounted)
+                {
+                    this.setState({
+                        evc:$value.ecv,
+                    });
+                }
+                if(this.state.rollingPasses !=  $value.times && this._isMounted)
+                {
+                    this.setState({
+                        rollingPasses:$value.times,
+                    });
+                }
+
+                if(this.state.frequency !=  $value.hz && this._isMounted)
+                {
+                    this.setState({
+                        frequency:$value.hz,
+                    });
+                }
+                if(this.state.excitingForce !=  $value.force && this._isMounted)
+                {
+                    this.setState({
+                        excitingForce:$value.force,
+                    });
+                }
+                if(this.state.amplitude !=  $value.hi && this._isMounted)
+                {
+                    this.setState({
+                        amplitude:$value.hi,
+                    });
+                }
+                if(this.state.travelSpeed !=  $value.speed && this._isMounted) {
+                    this.setState({
+                        travelSpeed: $value.speed,
+                    });
+                }
+
+            },1000);
+
+            //GPS0状态
+            ServiceApi.request("Cache.get",{
+                "key":"Sensor:GPS0:status",
+                "token":token
+            },($seq, $result, $info, $value) => {
+                if(this._isMounted) {
+                    this.setState({
+                        gpsStateOne: $value,
+                    });
+                }
+            },10000);
+            //GPS1状态
+            ServiceApi.request("Cache.get",{
+                "key":"Sensor:GPS1:status",
+                "token":token
+            },($seq, $result, $info, $value) => {
+                if(this._isMounted) {
+                    this.setState({
+                        gpsStateTwo:$value,
+                    });
+                }
+            },10000);
+
+            //定位信息
+            //ServiceApi.request("Cache.get",{
+            //    "key":"Sensor:GPS0:data"
+            //},($seq, $result, $info, $value) => {
+            //
+            //},1000);
+
+
+            ServiceApi.request("Cache.get",{
+                "key":"sys:dialup",
+                "token":token
+            },($seq, $result, $info, $value) => {
+                console.log("$value.status.signal_quality:" + $value.status.signal_quality);
+                if(this.state.signalIntensity !=  $value.status.signal_quality && this._isMounted)
+                {
+                    this.setState({
+                        signalIntensity:$value.status.signal_quality,
+                    });
+                }
+            },0);
+
+            ServiceApi.request("ProduceData.get_batches_list",{
+                "token":token,
+            },($seq, $result, $info, $value) => {
+                //console.log('asdasdasdasdasds');
+                //console.log($value);
+                //console.log('asdasdasdasdasds');
+            },2000);
+        }
+
 
     render(){
         //source={{uri: 'http://192.168.0.35/html5/index.html'}}
@@ -366,7 +417,7 @@ class  HomeDrawerNavigatorView extends Component{
                            ref={webview => this.webview = webview}
                            onMessage={this.invoke.listener}
                            style={{backgroundColor: 'rgba(255,255,255,0.8)',flex: 1}}
-                           source={{uri: 'http://192.168.0.35/html5/index.html'}}
+                           source={{uri: 'http://192.168.2.166:8080/RailwayCompactionSystemMobileCocos2dJSWeb/publish/html5/index.html'}}
                            javaScriptEnabled={true}
                            domStorageEnabled={true}
                            decelerationRate="normal"

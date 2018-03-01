@@ -39,6 +39,8 @@
 		E67745A467E94DC5AE1DB7FD /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F3C512A9DBE4B5596570588 /* libSplashScreen.a */; };
 		E7B15B18D6D64C51A1E1236D /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CC23E4555FC4EA9B959BF33 /* libRCTOrientation.a */; };
 		B67C256B813C4FDFBC8400C4 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3FBCF5EA2434D15B9D52751 /* libReact-Native-Webview-Bridge.a */; };
+		088864E5C37C4CD2AF378602 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F0554591A642A6BF4C3051 /* libRNDeviceInfo.a */; };
+		2506A8D577D6438889BB112E /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDCC106F64E4437A65BFF94 /* libRNDeviceInfo-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -272,6 +274,9 @@
 		7CC23E4555FC4EA9B959BF33 /* libRCTOrientation.a */ = {isa = PBXFileReference; name = "libRCTOrientation.a"; path = "libRCTOrientation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		F1358E7051F94A55AF2C6F70 /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		A3FBCF5EA2434D15B9D52751 /* libReact-Native-Webview-Bridge.a */ = {isa = PBXFileReference; name = "libReact-Native-Webview-Bridge.a"; path = "libReact-Native-Webview-Bridge.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		7B554B877F81451AA017040D /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNDeviceInfo.xcodeproj"; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A0F0554591A642A6BF4C3051 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo.a"; path = "libRNDeviceInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		9EDCC106F64E4437A65BFF94 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo-tvOS.a"; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +308,8 @@
 				E67745A467E94DC5AE1DB7FD /* libSplashScreen.a in Frameworks */,
 				E7B15B18D6D64C51A1E1236D /* libRCTOrientation.a in Frameworks */,
 				B67C256B813C4FDFBC8400C4 /* libReact-Native-Webview-Bridge.a in Frameworks */,
+				088864E5C37C4CD2AF378602 /* libRNDeviceInfo.a in Frameworks */,
+				2506A8D577D6438889BB112E /* libRNDeviceInfo-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +481,7 @@
 				19CD8CF8D8874482965D1DE7 /* SplashScreen.xcodeproj */,
 				E4A2C7ACEBF94AB1A0A37DAB /* RCTOrientation.xcodeproj */,
 				F1358E7051F94A55AF2C6F70 /* React-Native-Webview-Bridge.xcodeproj */,
+				7B554B877F81451AA017040D /* RNDeviceInfo.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1024,12 +1032,15 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
+					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 				);
 			};
 			name = Debug;
@@ -1053,12 +1064,15 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
+					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 				);
 			};
 			name = Release;
@@ -1083,6 +1097,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
+					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 				);
 			};
 			name = Debug;
@@ -1106,6 +1121,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
+					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 				);
 			};
 			name = Release;
@@ -1138,12 +1154,15 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
+					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 				);
 			};
 			name = Debug;
@@ -1176,12 +1195,15 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
+					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 				);
 			};
 			name = Release;
@@ -1209,6 +1231,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1233,6 +1257,8 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

@@ -3,6 +3,7 @@ package com.railwaycompactionsystemmobileclient;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 import com.github.yamill.orientation.OrientationPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNDeviceInfo(),
             new WebViewBridgePackage(),
             new OrientationPackage(),
             new SplashScreenReactPackage()
